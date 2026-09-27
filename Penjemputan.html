@@ -4,20 +4,20 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>MAG-GO — Penjemputan Limbah</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
 <style>
 :root{--g950:#0a2e1e;--g900:#0f3d28;--g800:#145232;--g700:#1a6b40;--g600:#1e844d;--g500:#259c5a;--g400:#34b86a;--g300:#5fd08a;--g200:#9ae6b0;--g100:#c6f2d4;--g50:#eefaf2;--amber:#f59e0b;--bg:#f6faf7;--surf:#fff;--surf2:#f0f7f3;--txt:#0a2e1e;--txt2:#3a5f4a;--muted:#6b8f7a;--bdr:#d4e8db;--rsm:12px;--rmd:20px;--rlg:28px;--rxl:40px;--sdw:0 4px 16px rgba(10,46,30,.08);--sdwm:0 8px 32px rgba(10,46,30,.12);}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;overflow-x:hidden;}
 .msym{font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;display:inline-block;line-height:1;white-space:nowrap;vertical-align:middle;-webkit-font-smoothing:antialiased;}
 .navbar{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr);padding:12px 0;box-shadow:0 2px 12px rgba(10,46,30,.06);}
 .navbar-inner{max-width:1280px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
 .brand-logo{width:44px;height:44px;border-radius:14px;overflow:hidden;box-shadow:var(--sdw);}
 .brand-logo img{width:100%;height:100%;object-fit:cover;}
-.brand-name{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--g900);letter-spacing:-.5px;}
+.brand-name{font-family:'Manrope',sans-serif;font-size:22px;font-weight:800;color:var(--g900);letter-spacing:-.5px;}
 .nav-links{display:flex;align-items:center;gap:4px;}
 .nav-link{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:50px;font-size:14px;font-weight:600;color:var(--txt2);text-decoration:none;transition:all .2s;}
 .nav-link:hover{background:var(--g50);color:var(--g700);}
@@ -37,7 +37,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .page-hero::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none;}
 .page-hero-inner{max-width:1280px;margin:0 auto;position:relative;z-index:2;}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(52,184,106,.2);border:1px solid rgba(52,184,106,.3);color:var(--g200);padding:8px 16px;border-radius:50px;font-size:13px;font-weight:600;margin-bottom:20px;}
-.page-hero h1{font-family:'Syne',sans-serif;font-size:48px;font-weight:800;color:white;line-height:1.1;letter-spacing:-1.2px;margin-bottom:16px;}
+.page-hero h1{font-family:'Manrope',sans-serif;font-size:48px;font-weight:800;color:white;line-height:1.1;letter-spacing:-1.2px;margin-bottom:16px;}
 .page-hero h1 span{color:var(--g300);}
 .page-hero p{font-size:18px;color:rgba(255,255,255,.7);max-width:520px;line-height:1.7;}
 
@@ -48,7 +48,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 /* ─── FORM CARD ─── */
 .card{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rlg);padding:32px;box-shadow:var(--sdw);}
 .card-header{margin-bottom:28px;}
-.card-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--g950);margin-bottom:6px;}
+.card-title{font-family:'Manrope',sans-serif;font-size:22px;font-weight:800;color:var(--g950);margin-bottom:6px;}
 .card-subtitle{font-size:14px;color:var(--muted);}
 .form-section{margin-bottom:28px;}
 .form-section-label{font-size:12px;font-weight:700;color:var(--g700);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
@@ -126,7 +126,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .history-info{flex:1;}
 .history-title{font-size:14px;font-weight:700;color:var(--txt);margin-bottom:2px;}
 .history-meta{font-size:12px;color:var(--muted);}
-.history-weight{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--g700);}
+.history-weight{font-family:'Manrope',sans-serif;font-size:16px;font-weight:700;color:var(--g700);}
 .history-pts{font-size:11px;color:var(--muted);text-align:right;}
 
 /* ─── FOOTER ─── */
@@ -134,7 +134,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .footer-inner{max-width:1280px;margin:0 auto;}
 .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px;}
 .footer-brand p{color:rgba(255,255,255,.5);font-size:14px;margin-top:12px;line-height:1.7;max-width:260px;}
-.footer-heading{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:white;margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px;}
+.footer-heading{font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;color:white;margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px;}
 .footer-links{list-style:none;display:flex;flex-direction:column;gap:10px;}
 .footer-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:14px;transition:color .2s;}
 .footer-links a:hover{color:var(--g300);}
@@ -577,7 +577,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
             <span style="color:var(--muted);">Per kg limbah</span><span style="font-weight:600;" id="est-pkg">—</span>
           </div>
           <div style="border-top:1px solid var(--g100);padding-top:12px;display:flex;justify-content:space-between;font-size:16px;">
-            <span style="font-weight:700;color:var(--g700);">Total Estimasi</span><span style="font-weight:800;color:var(--g700);font-family:'Syne',sans-serif;" id="est-total">—</span>
+            <span style="font-weight:700;color:var(--g700);">Total Estimasi</span><span style="font-weight:800;color:var(--g700);font-family:'Manrope',sans-serif;" id="est-total">—</span>
         </div>
 
         <button class="btn-green" style="width:100%;justify-content:center;font-size:16px;" onclick="submitPickup()">
@@ -819,17 +819,17 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
           <div style="width:48px;height:48px;background:rgba(52,184,106,.2);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;">🌿</div>
           <div>
-            <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:white;">Dapatkan Poin Rewards</div>
+            <div style="font-family:'Manrope',sans-serif;font-size:18px;font-weight:800;color:white;">Dapatkan Poin Rewards</div>
             <div style="font-size:13px;color:rgba(255,255,255,.6);">Setiap penyetoran dapatkan Go Points</div>
           </div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
           <div style="background:rgba(255,255,255,.08);border-radius:14px;padding:14px;text-align:center;">
-            <div style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--g300);">+1-3</div>
+            <div style="font-family:'Manrope',sans-serif;font-size:24px;font-weight:800;color:var(--g300);">+1-3</div>
             <div style="font-size:11px;color:rgba(255,255,255,.6);">poin per jenis limbah</div>
           </div>
           <div style="background:rgba(255,255,255,.08);border-radius:14px;padding:14px;text-align:center;">
-            <div style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--g300);">+4-6</div>
+            <div style="font-family:'Manrope',sans-serif;font-size:24px;font-weight:800;color:var(--g300);">+4-6</div>
             <div style="font-size:11px;color:rgba(255,255,255,.6);">poin per 2 jenis limbah</div>
           </div>
         </div>
