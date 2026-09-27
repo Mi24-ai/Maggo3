@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MAG-GO — Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<style>
+:root{--g950:#0a2e1e;--g900:#0f3d28;--g700:#1a6b40;--g600:#1e844d;--g400:#34b86a;--g300:#5fd08a;--g200:#9ae6b0;--g100:#c6f2d4;--g50:#eefaf2;--amber:#f59e0b;--bg:#f6faf7;--surf:#fff;--surf2:#f0f7f3;--txt:#0a2e1e;--txt2:#3a5f4a;--muted:#6b8f7a;--bdr:#d4e8db;--rsm:12px;--rmd:20px;--rlg:28px;--sdw:0 4px 16px rgba(10,46,30,.08);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--txt);}
+.msym{font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;display:inline-block;line-height:1;white-space:nowrap;vertical-align:middle;-webkit-font-smoothing:antialiased;}
+.navbar{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr);padding:12px 0;box-shadow:0 2px 12px rgba(10,46,30,.06);}
+.navbar-inner{max-width:1280px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.brand-logo{width:44px;height:44px;border-radius:14px;overflow:hidden;}
+.brand-logo img{width:100%;height:100%;object-fit:cover;}
+.brand-name{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--g900);letter-spacing:-.5px;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:50px;font-size:14px;font-weight:600;color:var(--txt2);text-decoration:none;transition:all .2s;}
+.nav-link:hover{background:var(--g50);color:var(--g700);}
+.nav-link.active{background:var(--g900);color:white;}
+.nav-link .msym{font-size:18px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
+.nav-link.active .msym{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;}
+.nav-actions{display:flex;align-items:center;gap:10px;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;border:none;transition:all .2s;text-decoration:none;font-family:inherit;}
+.btn-primary{background:var(--g900);color:white;}
+.btn-primary:hover{background:var(--g700);}
+.btn-outline{background:transparent;color:var(--g900);border:2px solid var(--bdr);}
+.btn-outline:hover{border-color:var(--g400);background:var(--g50);}
+
+.page-hero{background:linear-gradient(135deg,var(--g950),var(--g700));padding:56px 32px 64px;position:relative;overflow:hidden;}
+.page-hero-inner{max-width:1280px;margin:0 auto;position:relative;z-index:2;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(52,184,106,.2);border:1px solid rgba(52,184,106,.3);color:var(--g200);padding:8px 16px;border-radius:50px;font-size:13px;font-weight:600;margin-bottom:16px;}
+.page-hero h1{font-family:'Syne',sans-serif;font-size:44px;font-weight:800;color:white;line-height:1.1;letter-spacing:-1px;margin-bottom:12px;}
+.page-hero h1 span{color:var(--g300);}
+.page-hero p{font-size:16px;color:rgba(255,255,255,.7);max-width:480px;}
+.hero-search{background:white;border-radius:50px;display:flex;align-items:center;padding:6px 6px 6px 20px;gap:8px;min-width:320px;box-shadow:0 8px 32px rgba(0,0,0,.15);}
+.hero-search input{flex:1;border:none;outline:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;color:var(--txt);background:none;}
+.hero-search button{background:var(--g400);border:none;border-radius:50px;padding:10px 20px;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer;color:var(--g950);display:flex;align-items:center;gap:6px;}
+
+.marketplace-layout{max-width:1280px;margin:0 auto;padding:40px 32px;display:grid;grid-template-columns:260px 1fr;gap:32px;align-items:start;}
+
+/* SIDEBAR */
+.sidebar{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rlg);padding:24px;position:sticky;top:80px;}
+.sidebar-section{margin-bottom:28px;}
+.sidebar-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--g950);margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px;}
+.cat-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.cat-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;font-size:14px;font-weight:600;color:var(--txt2);cursor:pointer;transition:all .2s;}
+.cat-item:hover,.cat-item.active{background:var(--g50);color:var(--g700);}
+.cat-item.active{background:var(--g100);color:var(--g900);}
+.cat-count{margin-left:auto;background:var(--surf2);color:var(--muted);font-size:11px;font-weight:700;padding:2px 8px;border-radius:50px;}
+.cat-item.active .cat-count{background:var(--g200);color:var(--g800);}
+.filter-group{margin-bottom:16px;}
+.filter-label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.range-wrap{padding:4px 0;}
+.range-input{width:100%;accent-color:var(--g600);cursor:pointer;}
+.range-vals{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:4px;}
+.checkbox-list{display:flex;flex-direction:column;gap:8px;}
+.checkbox-item{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--txt2);cursor:pointer;}
+.checkbox-item input{accent-color:var(--g600);width:16px;height:16px;cursor:pointer;}
+
+/* PRODUCT GRID */
+.products-area{}
+.products-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+.products-count{font-size:15px;color:var(--muted);}
+.products-count span{font-weight:800;color:var(--txt);}
+.sort-select{padding:8px 16px;border:1.5px solid var(--bdr);border-radius:50px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;color:var(--txt);background:white;cursor:pointer;outline:none;}
+.sort-select:focus{border-color:var(--g400);}
+.tags-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:var(--g50);border:1px solid var(--g100);border-radius:50px;font-size:13px;font-weight:600;color:var(--g700);cursor:pointer;transition:all .2s;}
+.tag:hover,.tag.active{background:var(--g900);color:white;border-color:var(--g900);}
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.product-card{background:var(--surf);border:1px solid var(--bdr);border-radius:22px;overflow:hidden;transition:all .3s;cursor:pointer;}
+.product-card:hover{transform:translateY(-5px);box-shadow:0 16px 48px rgba(10,46,30,.12);border-color:var(--g200);}
+.product-img{height:180px;background:var(--surf2);position:relative;display:flex;align-items:center;justify-content:center;font-size:56px;overflow:hidden;}
+.product-badge{position:absolute;top:12px;left:12px;padding:4px 12px;border-radius:50px;font-size:11px;font-weight:700;}
+.badge-new{background:#eff6ff;color:#1d4ed8;}
+.badge-hot{background:#fef3c7;color:#92400e;}
+.badge-eco{background:var(--g50);color:var(--g700);}
+.product-fav{position:absolute;top:12px;right:12px;width:32px;height:32px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:var(--sdw);transition:all .2s;}
+.product-fav:hover{background:var(--g50);}
+.product-fav .msym{font-size:17px;color:var(--muted);font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
+.product-body{padding:16px;}
+.product-seller{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:.3px;}
+.product-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--txt);margin-bottom:8px;line-height:1.3;}
+.product-rating{display:flex;align-items:center;gap:4px;margin-bottom:10px;}
+.stars{color:#f59e0b;font-size:13px;}
+.rating-count{font-size:12px;color:var(--muted);}
+.product-price{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--g700);margin-bottom:4px;}
+.product-unit{font-size:12px;color:var(--muted);}
+.product-footer{display:flex;gap:8px;margin-top:14px;}
+.btn-cart{flex:1;padding:10px;background:var(--g900);color:white;border:none;border-radius:12px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-cart:hover{background:var(--g700);}
+.btn-wish{width:40px;height:40px;border:1.5px solid var(--bdr);border-radius:12px;background:none;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+.btn-wish:hover{background:var(--g50);border-color:var(--g300);}
+
+/* CART MINI */
+.cart-pill{position:fixed;bottom:32px;right:32px;background:var(--g900);color:white;border-radius:50px;padding:14px 24px;display:none;align-items:center;gap:12px;box-shadow:0 8px 32px rgba(10,46,30,.3);z-index:200;cursor:pointer;transition:all .2s;}
+.cart-pill:hover{background:var(--g700);transform:translateY(-2px);}
+.cart-count{background:var(--g400);color:var(--g950);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;}
+
+.product-img{
+  position:relative;
+  height:220px;
+  overflow:hidden;
+  background:#f8faf8;
+}
+
+.product-image{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .4s ease;
+}
+
+.product-card:hover .product-image{
+  transform:scale(1.08);
+}
+
+/* FOOTER */
+.footer{background:var(--g950);padding:56px 32px 32px;margin-top:80px;}
+.footer-inner{max-width:1280px;margin:0 auto;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px;}
+.footer-brand p{color:rgba(255,255,255,.5);font-size:14px;margin-top:12px;line-height:1.7;max-width:260px;}
+.footer-heading{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:white;margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.footer-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:14px;transition:color .2s;}
+.footer-links a:hover{color:var(--g300);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;display:flex;justify-content:space-between;}
+.footer-copy{font-size:13px;color:rgba(255,255,255,.4);}
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-top:1px solid var(--bdr);padding:8px 0 calc(8px + env(safe-area-inset-bottom));z-index:100;}
+.bottom-nav-inner{display:flex;justify-content:space-around;}
+.bottom-nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 12px;border-radius:12px;text-decoration:none;}
+.bottom-nav-item span:first-child{font-size:24px;color:var(--muted);font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
+.bottom-nav-item span:last-child{font-size:10px;font-weight:600;color:var(--muted);}
+.bottom-nav-item.active span{color:var(--g700) !important;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24 !important;}
+@media(max-width:768px){
+  .nav-links{display:none;}.bottom-nav{display:block;}
+  .page-hero{padding:48px 20px;}.page-hero-inner{grid-template-columns:1fr;}.page-hero h1{font-size:34px;}
+  .marketplace-layout{grid-template-columns:1fr;padding:24px 20px;}.sidebar{display:none;}
+  .products-grid{grid-template-columns:repeat(2,1fr);}
+  .footer-top{grid-template-columns:1fr 1fr;gap:28px;}.footer-bottom{flex-direction:column;gap:10px;}
+  body{padding-bottom:80px;}
+  .cart-pill{bottom:96px;right:20px;}
+}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="navbar-inner">
+    <a href="Home.html" class="brand">
+      <div class="brand-logo"><img src="foto/MAG-Go.PNG" alt="MAG-GO"/></div>
+      <span class="brand-name">Mag-Go</span>
+    </a>
+    <nav class="nav-links">
+      <a href="Home.html" class="nav-link"><span class="msym" style="font-variation-settings:'FILL' 0">home</span>Home</a>
+      <a href="Penjemputan.html" class="nav-link"><span class="msym" style="font-variation-settings:'FILL' 0">local_shipping</span>Go Pick-Up</a>
+      <a href="marketplace.html" class="nav-link active"><span class="msym">storefront</span>Go Marketplace</a>
+      <a href="Game.html" class="nav-link"><span class="msym" style="font-variation-settings:'FILL' 0">sports_esports</span>Maggotku</a>
+      <a href="leaderboard.html" class="nav-link"><span class="msym" style="font-variation-settings:'FILL' 0">leaderboard</span>Go Leaderboard</a>
+      <a href="Berlangganan.html" class="nav-link"><span class="msym" style="font-variation-settings:'FILL' 0">workspace_premium</span>Go Langganan</a>
+    </nav>
+</header>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div>
+      <div class="hero-badge"><span class="msym" style="font-size:16px">storefront</span>Pasar Produk Maggot BSF Terpercaya</div>
+      <h1>Go Marketplace<br/><span>Mag-Go</span></h1>
+      <p>Beli & jual produk hasil budidaya maggot segar, kering, tepung protein, dan pupuk organik langsung dari peternak terverifikasi.</p>
+    </div>
+    <div class="hero-search">
+      <span class="msym" style="color:var(--muted);font-variation-settings:'FILL' 0">search</span>
+      <input type="text" placeholder="Cari maggot, tepung, pupuk..."/>
+      <button><span class="msym" style="font-size:16px">search</span>Cari</button>
+    </div>
+  </div>
+</section>
+
+<div class="marketplace-layout">
+  <!-- SIDEBAR FILTER -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-title">Kategori</div>
+      <ul class="cat-list">
+        <li class="cat-item active" onclick="filterCat('all',this)"><span>🛒</span>Semua Produk<span class="cat-count">48</span></li>
+        <li class="cat-item" onclick="filterCat('segar',this)"><span></span>Maggot Segar<span class="cat-count">18</span></li>
+        <li class="cat-item" onclick="filterCat('kering',this)"><span></span>Maggot Kering<span class="cat-count">12</span></li>
+        <li class="cat-item" onclick="filterCat('tepung',this)"><span></span>Tepung Maggot<span class="cat-count">9</span></li>
+        <li class="cat-item" onclick="filterCat('pupuk',this)"><span></span>Pupuk Organik<span class="cat-count">7</span></li>
+        <li class="cat-item" onclick="filterCat('minyak',this)"><span></span>Minyak BSF<span class="cat-count">2</span></li>
+      </ul>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">Filter Harga</div>
+      <div class="filter-group">
+        <div class="filter-label">Rentang Harga</div>
+        <div class="range-wrap">
+          <input type="range" class="range-input" min="0" max="500000" value="250000" oninput="updateRange(this.value)"/>
+          <div class="range-vals"><span>Rp 0</span><span id="range-val">≤ Rp 250.000</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">Lokasi Peternak</div>
+      <div class="checkbox-list">
+        <label class="checkbox-item"><input type="checkbox" checked/> Sragen </label>
+        <label class="checkbox-item"><input type="checkbox" checked/> Surakarta</label>
+        <label class="checkbox-item"><input type="checkbox"/> Boyolali</label>
+        <label class="checkbox-item"><input type="checkbox"/> Klaten </label>
+        <label class="checkbox-item"><input type="checkbox"/> Karanganyar</label>
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">Sertifikasi</div>
+      <div class="checkbox-list">
+        <label class="checkbox-item"><input type="checkbox" checked/>Terverifikasi Mag-Go</label>
+        <label class="checkbox-item"><input type="checkbox"/>Organik</label>
+        <label class="checkbox-item"><input type="checkbox"/>BPOM</label>
+      </div>
+    </div>
+  </aside>
+
+  <!-- PRODUCTS -->
+  <div class="products-area">
+    <div class="products-toolbar">
+      <div class="products-count"><span id="prod-count">48</span> produk ditemukan</div>
+      <select class="sort-select"><option>Terpopuler</option><option>Harga: Termurah</option><option>Harga: Termahal</option><option>Rating Tertinggi</option><option>Terbaru</option></select>
+    </div>
+    <div class="tags-row">
+      <div class="tag active" onclick="toggleTag(this)">Terlaris</div>
+      <div class="tag" onclick="toggleTag(this)">Rating 4.8+</div>
+      <div class="tag" onclick="toggleTag(this)">Gratis Ongkir</div>
+      <div class="tag" onclick="toggleTag(this)">Organik</div>
+      <div class="tag" onclick="toggleTag(this)">Terverifikasi</div>
+    </div>
+    <div class="products-grid" id="products-grid">
+      <!-- Products rendered by JS -->
+    </div>
+    <div style="text-align:center;margin-top:40px;">
+      <button onclick="loadMore()" style="padding:14px 36px;border:2px solid var(--bdr);border-radius:50px;background:white;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;cursor:pointer;transition:all .2s;color:var(--txt2);">Muat Lebih Banyak →</button>
+    </div>
+  </div>
+</div>
+
+<!-- CART PILL -->
+<div class="cart-pill" id="cart-pill" onclick="alert('Fitur keranjang belanja segera hadir! 🛒')">
+  <span class="msym">shopping_cart</span>
+  <span style="font-weight:700;font-size:15px;">Keranjang</span>
+  <div class="cart-count" id="cart-count">0</div>
+  <span style="font-size:14px;color:var(--g200);font-weight:600;" id="cart-total">Rp 0</span>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="Home.html" class="brand" style="text-decoration:none;">
+          <div class="brand-logo"><img src="foto/MAG-Go.PNG" alt="MAG-GO logo"/></div>
+          <span class="brand-name" style="color:white;">Mag-Go</span>
+        </a>
+        <p>Platform digital pengelolaan food waste berbasis ekonomi sirkular Indonesia.</p>
+      </div>
+      <div><div class="footer-heading">Platform</div><ul class="footer-links"><li><a href="Penjemputan.html">Go Pick-Up</a></li><li><a href="marketplace.html">Go Marketplace</a></li><li><a href="Game.html">Maggotku</a></li><li><a href="leaderboard.html">Go Leaderboard</a></li><li><a href="Berlangganan.html">Go Langganan</a></li></ul></div>
+      <div><div class="footer-heading">Mitra</div><ul class="footer-links"><li><a href="#">Pemasok Limbah</a></li><li><a href="#">Peternak Maggot</a></li><li><a href="#">Petani & Peternak</a></li></ul></div>
+      <div><div class="footer-heading">Perusahaan</div><ul class="footer-links"><li><a href="#">Tentang Kami</a></li><li><a href="#">Blog</a></li><li><a href="#">Hubungi Kami</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2026 Mag-Go. Dibuat dengan 🌿 untuk Indonesia.</div><div class="footer-copy">Applikasi Ekonomi Sirkular Food Waste Indonesia</div></div>
+  </div>
+</footer>
+
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <a href="Home.html" class="bottom-nav-item"><span class="msym">home</span><span>Home</span></a>
+    <a href="Penjemputan.html" class="bottom-nav-item"><span class="msym">local_shipping</span><span>Go Pick-Up</span></a>
+    <a href="marketplace.html" class="bottom-nav-item active"><span class="msym">storefront</span><span>Go Marketplace</span></a>
+    <a href="Game.html" class="bottom-nav-item"><span class="msym">sports_esports</span><span>Maggotku</span></a>
+    <a href="Berlangganan.html" class="bottom-nav-item"><span class="msym">workspace_premium</span><span>Go Langganan</span></a>
+  </div>
+</nav>
+
+<script>
+const products = [
+  {
+    id:1,
+    image:'foto/Maggot bsf.jpg',
+    name:'Maggot BSF Segar Premium',
+    seller:'PeternakMaggot Bandung',
+    rating:4.9,
+    reviews:247,
+    price:35000,
+    unit:'per kg',
+    badge:'hot',
+    cat:'segar'
+  },
+  {
+    id:2,
+    image:'foto/Maggot kering pakan ikan.jpg',
+    name:'Maggot Kering Pakan Ikan',
+    seller:'CV Larva Nusantara',
+    rating:4.8,
+    reviews:183,
+    price:85000,
+    unit:'per 500g',
+    badge:'new',
+    cat:'kering'
+  },
+  {
+    id:3,
+    image:'foto/tepung maggot.jpg',
+    name:'Tepung Maggot High Protein 45%',
+    seller:'PT Agri Maggot Indo',
+    rating:4.9,
+    reviews:312,
+    price:120000,
+    unit:'per kg',
+    badge:'hot',
+    cat:'tepung'
+  },
+
+   {
+    id:4,
+    image:'foto/Pupuk maggot cair.jpeg',
+    name:'Pupuk Organik Cair Eksklusif',
+    seller:'Green Farm Cianjur',
+    rating:4.7,
+    reviews:98,
+    price:45000,
+    unit:'per liter',
+    badge:'eco',
+    cat:'pupuk'
+  },
+
+  {
+    id:5,
+    image:'foto/maggot bsf pupae.jpg',
+    name:'Maggot BSF Pre-Pupae Khusus',
+    seller:'Maggot Farm Lembang',
+    rating:4.8,
+    reviews:156,
+    price:42000,
+    unit:'per kg',
+    badge:null,
+    cat:'segar'
+  },
+
+  {
+    id:6,
+    image:'foto/minyak maggot murni.jpg',
+    name:'Minyak Maggot BSF Murni',
+    seller:'BSF Oil Indonesia',
+    rating:4.6,
+    reviews:67,
+    price:195000,
+    unit:'per 250ml',
+    badge:'new',
+    cat:'minyak'
+  },
+
+  {
+    id:7,
+    image:'foto/maggot kering granul.jpg',
+    name:'Maggot Kering Granul Premium',
+    seller:'PeternakMaggot Garut',
+    rating:4.7,
+    reviews:201,
+    price:95000,
+    unit:'per 500g',
+    badge:null,
+    cat:'kering'
+  },
+
+  {
+    id:8,
+    image:'foto/tepung maggot halus.jpg',
+    name:'Tepung Maggot Halus BSF',
+    seller:'AgroProtein Jawa',
+    rating:4.8,
+    reviews:134,
+    price:115000,
+    unit:'per kg',
+    badge:null,
+    cat:'tepung'
+  },
+
+  {
+    id:9,
+    image:'foto/kompos maggot.jpg',
+    name:'Kompos Maggot Padat Super',
+    seller:'Kebun Organik Dago',
+    rating:4.9,
+    reviews:289,
+    price:28000,
+    unit:'per kg',
+    badge:'hot',
+    cat:'pupuk'
+  }
+];
+let cartItems = 0, cartTotal = 0;
+
+function renderProducts(list) {
+  const g = document.getElementById('products-grid');
+  g.innerHTML = list.map(p => `
+    <div class="product-card">
+    <div class="product-img">
+  <img src="${p.image}" alt="${p.name}" class="product-image">
+        ${p.badge ? `<div class="product-badge badge-${p.badge}">${p.badge==='hot'?'🔥 Terlaris':p.badge==='new'?'✨ Baru':'🌿 Eco'}</div>` : ''}
+        <div class="product-fav"><span class="msym">favorite</span></div>
+      </div>
+      <div class="product-body">
+        <div class="product-seller">✅ ${p.seller}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">${p.rating} (${p.reviews} ulasan)</span></div>
+        <div class="product-price">Rp ${p.price.toLocaleString('id')}</div>
+        <div class="product-unit">${p.unit}</div>
+        <div class="product-footer">
+          <button class="btn-cart" onclick="addToCart(${p.price})"><span class="msym" style="font-size:15px">add_shopping_cart</span>Tambah</button>
+          <button class="btn-wish"><span class="msym" style="font-size:17px;color:var(--muted);font-variation-settings:'FILL' 0,'wght' 400">favorite</span></button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function addToCart(price) {
+  cartItems++;
+  cartTotal += price;
+  const pill = document.getElementById('cart-pill');
+  pill.style.display = 'flex';
+  document.getElementById('cart-count').textContent = cartItems;
+  document.getElementById('cart-total').textContent = 'Rp ' + cartTotal.toLocaleString('id');
+}
+
+function filterCat(cat, el) {
+  document.querySelectorAll('.cat-item').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  const filtered = cat === 'all' ? products : products.filter(p => p.cat === cat);
+  document.getElementById('prod-count').textContent = filtered.length;
+  renderProducts(filtered);
+}
+
+function toggleTag(el) { el.classList.toggle('active'); }
+function updateRange(val) { document.getElementById('range-val').textContent = '≤ Rp ' + parseInt(val).toLocaleString('id'); }
+function loadMore() { alert('Memuat produk tambahan...'); }
+
+renderProducts(products);
+</script>
+</body>
+</html>

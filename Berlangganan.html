@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MAG-GO — Daftar Mitra Penyuplai</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<style>
+
+:root{--g950:#0a2e1e;--g900:#0f3d28;--g700:#1a6b40;--g600:#1e844d;--g400:#34b86a;--g300:#5fd08a;--g200:#9ae6b0;--g100:#c6f2d4;--g50:#eefaf2;--amber:#f59e0b;--bg:#f6faf7;--surf:#fff;--surf2:#f0f7f3;--txt:#0a2e1e;--txt2:#3a5f4a;--muted:#6b8f7a;--bdr:#d4e8db;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;}
+.msym{font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;display:inline-block;line-height:1;white-space:nowrap;vertical-align:middle;-webkit-font-smoothing:antialiased;}
+
+/* NAVBAR */
+.navbar{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr);padding:12px 0;box-shadow:0 2px 12px rgba(10,46,30,.06);}
+.navbar-inner{max-width:1280px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.brand-logo{width:44px;height:44px;border-radius:14px;overflow:hidden;}
+.brand-logo img{width:100%;height:100%;object-fit:cover;}
+.brand-name{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--g900);letter-spacing:-.5px;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:50px;font-size:14px;font-weight:600;color:var(--txt2);text-decoration:none;transition:all .2s;}
+.nav-link:hover{background:var(--g50);color:var(--g700);}
+.nav-link.active{background:var(--g900);color:white;}
+.nav-link .msym{font-size:18px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
+.nav-link.active .msym{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;}
+.nav-actions{display:flex;align-items:center;gap:10px;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;border:none;transition:all .2s;text-decoration:none;font-family:inherit;}
+.btn-primary{background:var(--g900);color:white;}.btn-primary:hover{background:var(--g700);}
+.btn-outline{background:transparent;color:var(--g900);border:2px solid var(--bdr);}.btn-outline:hover{border-color:var(--g400);background:var(--g50);}
+
+/* HERO */
+.page-hero{background:linear-gradient(135deg,var(--g950),var(--g700));padding:56px 32px 64px;position:relative;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(95,208,138,.08);pointer-events:none;}
+.page-hero::after{content:'';position:absolute;bottom:-60px;left:10%;width:200px;height:200px;border-radius:50%;background:rgba(95,208,138,.06);pointer-events:none;}
+.page-hero-inner{max-width:1280px;margin:0 auto;position:relative;z-index:2;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(52,184,106,.2);border:1px solid rgba(52,184,106,.3);color:var(--g200);padding:8px 16px;border-radius:50px;font-size:13px;font-weight:600;margin-bottom:16px;}
+.page-hero h1{font-family:'Syne',sans-serif;font-size:44px;font-weight:800;color:white;line-height:1.1;letter-spacing:-1px;margin-bottom:12px;}
+.page-hero h1 span{color:var(--g300);}
+.page-hero p{font-size:16px;color:rgba(255,255,255,.7);max-width:560px;}
+.hero-stats{display:flex;gap:32px;margin-top:36px;flex-wrap:wrap;}
+.hero-stat{display:flex;flex-direction:column;}
+.hero-stat-num{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:white;}
+.hero-stat-lbl{font-size:13px;color:rgba(255,255,255,.6);}
+
+/* MAIN */
+.main{max-width:1280px;margin:0 auto;padding:48px 32px;}
+
+/* STEP INDICATOR */
+.steps-bar{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:48px;}
+.step-item{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;max-width:180px;}
+.step-circle{width:40px;height:40px;border-radius:50%;background:var(--surf2);border:2px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:var(--muted);transition:all .3s;position:relative;z-index:2;}
+.step-circle.active{background:var(--g900);border-color:var(--g900);color:white;}
+.step-circle.done{background:var(--g400);border-color:var(--g400);color:white;}
+.step-label{font-size:12px;font-weight:600;color:var(--muted);text-align:center;}
+.step-label.active{color:var(--g900);}
+.step-line{flex:1;height:2px;background:var(--bdr);margin-top:-20px;max-width:100px;}
+.step-line.done{background:var(--g400);}
+
+/* MITRA CARDS */
+.section-title{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--g950);margin-bottom:8px;}
+.section-subtitle{font-size:15px;color:var(--muted);margin-bottom:32px;}
+.mitra-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:48px;}
+.mitra-card{background:var(--surf);border:2.5px solid var(--bdr);border-radius:28px;padding:32px;position:relative;cursor:pointer;transition:all .3s;user-select:none;}
+.mitra-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(10,46,30,.1);border-color:var(--g300);}
+.mitra-card.selected{border-color:var(--g700);box-shadow:0 0 0 4px rgba(26,107,64,.12);background:var(--g50);}
+.mitra-card.selected .mitra-check{opacity:1;transform:scale(1);}
+.mitra-check{position:absolute;top:16px;right:16px;width:28px;height:28px;background:var(--g700);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(0.5);transition:all .25s;}
+.mitra-check .msym{font-size:16px;color:white;}
+.mitra-icon-wrap{width:64px;height:64px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:20px;}
+.mitra-type{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;}
+.mitra-name{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--g950);margin-bottom:8px;}
+.mitra-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:20px;}
+.mitra-price-row{display:flex;align-items:baseline;gap:4px;margin-bottom:20px;}
+.mitra-price{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--g900);}
+.mitra-price-period{font-size:13px;color:var(--muted);}
+.mitra-benefits{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.mitra-benefits li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--txt2);}
+.mitra-benefits li .msym{font-size:16px;color:var(--g600);flex-shrink:0;margin-top:1px;}
+
+/* CARD COLORS */
+.card-rt .mitra-icon-wrap{background:#fff7ed;}
+.card-rt .mitra-type{color:#d97706;}
+.card-rt.selected{border-color:#d97706;box-shadow:0 0 0 4px rgba(217,119,6,.1);}
+.card-rt.selected .mitra-check{background:#d97706;}
+.card-kt .mitra-icon-wrap{background:var(--g50);}
+.card-kt .mitra-type{color:var(--g700);}
+.card-kt.selected{border-color:var(--g700);}
+.card-mg .mitra-icon-wrap{background:#f0f9ff;}
+.card-mg .mitra-type{color:#0369a1;}
+.card-mg.selected{border-color:#0369a1;box-shadow:0 0 0 4px rgba(3,105,161,.1);}
+.card-mg.selected .mitra-check{background:#0369a1;}
+
+/* FORM SECTION */
+.form-section{background:var(--surf);border:1.5px solid var(--bdr);border-radius:28px;padding:40px;margin-bottom:48px;display:none;}
+.form-section.visible{display:block;animation:fadeUp .35s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.form-header{display:flex;align-items:center;gap:16px;margin-bottom:32px;padding-bottom:24px;border-bottom:1.5px solid var(--bdr);}
+.form-header-icon{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.form-header-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--g950);}
+.form-header-sub{font-size:13px;color:var(--muted);}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.form-group{display:flex;flex-direction:column;gap:8px;}
+.form-group.full{grid-column:1/-1;}
+.form-label{font-size:13px;font-weight:700;color:var(--txt2);}
+.form-input,.form-select,.form-textarea{padding:12px 16px;border:1.5px solid var(--bdr);border-radius:14px;font-size:14px;font-family:inherit;color:var(--txt);background:var(--bg);transition:border-color .2s,box-shadow .2s;outline:none;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--g400);box-shadow:0 0 0 3px rgba(52,184,106,.12);}
+.form-textarea{resize:vertical;min-height:96px;}
+.form-select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'%3E%3Cpath fill='%236b8f7a' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;}
+.form-hint{font-size:12px;color:var(--muted);}
+.form-divider{grid-column:1/-1;border:none;border-top:1.5px dashed var(--bdr);margin:4px 0;}
+.form-section-label{grid-column:1/-1;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--g700);text-transform:uppercase;letter-spacing:.5px;}
+.radio-group{display:flex;gap:12px;flex-wrap:wrap;}
+.radio-option{display:flex;align-items:center;gap:8px;padding:10px 16px;border:1.5px solid var(--bdr);border-radius:12px;cursor:pointer;font-size:13px;font-weight:600;color:var(--txt2);transition:all .2s;}
+.radio-option:has(input:checked){border-color:var(--g700);background:var(--g50);color:var(--g900);}
+.radio-option input{accent-color:var(--g700);}
+.upload-box{border:2px dashed var(--bdr);border-radius:16px;padding:28px;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg);}
+.upload-box:hover{border-color:var(--g400);background:var(--g50);}
+.upload-box .msym{font-size:36px;color:var(--muted);margin-bottom:8px;display:block;}
+.upload-box p{font-size:13px;color:var(--muted);}
+.upload-box strong{color:var(--g700);}
+
+/* SUMMARY BOX */
+.summary-box{background:var(--g950);border-radius:24px;padding:32px;margin-bottom:32px;display:none;}
+.summary-box.visible{display:block;}
+.summary-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--g200);margin-bottom:20px;text-transform:uppercase;letter-spacing:.5px;}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);}
+.summary-row:last-child{border-bottom:none;}
+.summary-label{font-size:14px;color:rgba(255,255,255,.55);}
+.summary-value{font-size:14px;font-weight:700;color:white;}
+.summary-total-row{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:16px;border-top:1.5px solid rgba(255,255,255,.15);}
+.summary-total-label{font-size:15px;font-weight:700;color:var(--g200);}
+.summary-total-price{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:white;}
+
+/* PAYMENT METHODS */
+.payment-section{margin-bottom:32px;display:none;}
+.payment-section.visible{display:block;}
+.payment-title{font-size:15px;font-weight:700;color:var(--txt2);margin-bottom:12px;}
+.payment-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;}
+.payment-option{border:2px solid var(--bdr);border-radius:14px;padding:12px 10px;text-align:center;cursor:pointer;transition:all .2s;font-size:12px;font-weight:700;color:var(--txt2);}
+.payment-option:hover{border-color:var(--g400);}
+.payment-option.selected{border-color:var(--g700);background:var(--g50);color:var(--g900);}
+.payment-option .pay-icon{font-size:22px;display:block;margin-bottom:4px;}
+
+/* SUBMIT */
+.submit-btn{width:100%;padding:16px;border-radius:50px;background:var(--g900);color:white;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:16px;cursor:pointer;border:none;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:10px;}
+.submit-btn:hover{background:var(--g700);transform:translateY(-1px);box-shadow:0 8px 24px rgba(10,46,30,.25);}
+.submit-btn:disabled{background:var(--muted);cursor:not-allowed;transform:none;box-shadow:none;}
+
+/* SUCCESS STATE */
+.success-panel{display:none;text-align:center;padding:64px 32px;background:var(--surf);border:1.5px solid var(--bdr);border-radius:28px;}
+.success-panel.visible{display:block;animation:fadeUp .4s ease;}
+.success-icon{width:80px;height:80px;background:var(--g50);border:3px solid var(--g300);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;}
+.success-icon .msym{font-size:42px;color:var(--g600);}
+.success-title{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--g950);margin-bottom:12px;}
+.success-desc{font-size:15px;color:var(--muted);max-width:480px;margin:0 auto 32px;}
+.success-ref{display:inline-flex;align-items:center;gap:8px;background:var(--surf2);border:1px solid var(--bdr);border-radius:12px;padding:10px 20px;font-size:14px;font-weight:700;color:var(--txt2);margin-bottom:32px;}
+
+/* FAQ */
+.faq-section{max-width:720px;margin:64px auto 0;}
+.faq-title{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--g950);text-align:center;margin-bottom:32px;}
+.faq-item{border:1px solid var(--bdr);border-radius:16px;margin-bottom:12px;overflow:hidden;background:var(--surf);}
+.faq-q{padding:18px 22px;font-weight:700;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;transition:background .2s;}
+.faq-q:hover{background:var(--g50);}
+.faq-q .msym{color:var(--muted);transition:transform .3s;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;font-size:20px;flex-shrink:0;}
+.faq-q.open .msym{transform:rotate(180deg);color:var(--g700);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+.faq-a-inner{padding:0 22px 18px;font-size:14px;color:var(--muted);line-height:1.75;}
+
+/* FOOTER */
+.footer{background:var(--g950);padding:56px 32px 32px;margin-top:80px;}
+.footer-inner{max-width:1280px;margin:0 auto;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px;}
+.footer-brand p{color:rgba(255,255,255,.5);font-size:14px;margin-top:12px;line-height:1.7;max-width:260px;}
+.footer-heading{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:white;margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.footer-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:14px;transition:color .2s;}
+.footer-links a:hover{color:var(--g300);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;display:flex;justify-content:space-between;}
+.footer-copy{font-size:13px;color:rgba(255,255,255,.4);}
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-top:1px solid var(--bdr);padding:8px 0 calc(8px + env(safe-area-inset-bottom));z-index:100;}
+.bottom-nav-inner{display:flex;justify-content:space-around;}
+.bottom-nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 12px;border-radius:12px;text-decoration:none;}
+.bottom-nav-item span:first-child{font-size:24px;color:var(--muted);font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
+.bottom-nav-item span:last-child{font-size:10px;font-weight:600;color:var(--muted);}
+.bottom-nav-item.active span{color:var(--g700) !important;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24 !important;}
+
+@media(max-width:768px){
+  .nav-links{display:none;}.bottom-nav{display:block;}
+  .page-hero{padding:40px 20px;}.page-hero h1{font-size:28px;}
+  .main{padding:32px 20px;}
+  .mitra-grid{grid-template-columns:1fr;}
+  .form-grid{grid-template-columns:1fr;}
+  .form-group.full{grid-column:1;}
+  .footer-top{grid-template-columns:1fr 1fr;gap:28px;}.footer-bottom{flex-direction:column;gap:10px;text-align:center;}
+  body{padding-bottom:80px;}
+  .steps-bar{gap:0;}
+  .hero-stats{gap:20px;}
+}
+@media(max-width:480px){
+  .mitra-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<header class="navbar"><div class="navbar-inner">
+    <a href="Home.html" class="brand"><div class="brand-logo"><img src="foto/MAG-Go.PNG" alt="MAG-GO"/></div><span class="brand-name">Mag-Go</span></a>
+    <nav class="nav-links"><a href="Home.html" class="nav-link "><span class="msym">home</span>Home</a><a href="Penjemputan.html" class="nav-link "><span class="msym">local_shipping</span>Go Pick-Up</a><a href="marketplace.html" class="nav-link "><span class="msym">storefront</span>Go Marketplace</a><a href="Game.html" class="nav-link "><span class="msym">sports_esports</span>Maggotku</a><a href="leaderboard.html" class="nav-link "><span class="msym">leaderboard</span>Go Leaderboard</a><a href="Berlangganan.html" class="nav-link active"><span class="msym">workspace_premium</span>Go Langganan</a></nav>
+  </div></header>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="hero-badge"><span class="msym" style="font-size:16px">handshake</span>Bergabung sebagai Mitra Penyuplai</div>
+    <h1>Daftarkan <span>Sampahmu</span><br/>Jadi Nilai Ekonomi</h1>
+    <p>Jadilah bagian dari ekosistem Mag-Go. Daftarkan diri sebagai mitra penyuplai sampah organik dan dapatkan manfaat nyata setiap bulannya.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">500+</span><span class="hero-stat-lbl">Mitra Aktif</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">12 Ton</span><span class="hero-stat-lbl">Sampah Dikelola/Hari</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">3 Kategori</span><span class="hero-stat-lbl">Jenis Mitra</span></div>
+    </div>
+  </div>
+</section>
+
+<main class="main" id="main-form">
+
+  <!-- STEP INDICATOR -->
+  <div class="steps-bar" id="steps-bar">
+    <div class="step-item">
+      <div class="step-circle active" id="step1-circle">1</div>
+      <span class="step-label active" id="step1-label">Pilih Kategori</span>
+    </div>
+    <div class="step-line" id="line1"></div>
+    <div class="step-item">
+      <div class="step-circle" id="step2-circle">2</div>
+      <span class="step-label" id="step2-label">Isi Data Diri</span>
+    </div>
+    <div class="step-line" id="line2"></div>
+    <div class="step-item">
+      <div class="step-circle" id="step3-circle">3</div>
+      <span class="step-label" id="step3-label">Konfirmasi & Bayar</span>
+    </div>
+  </div>
+
+  <!-- STEP 1: PILIH KATEGORI MITRA -->
+  <div id="step1-section">
+    <div class="section-title">Pilih Kategori Mitra</div>
+    <div class="section-subtitle">Sesuaikan dengan jenis sumber sampah organik yang kamu miliki</div>
+
+    <div class="mitra-grid">
+
+      <!-- RUMAH TANGGA -->
+      <div class="mitra-card card-rt" id="card-rt" onclick="selectMitra('rt')">
+        <div class="mitra-check"><span class="msym">check</span></div>
+        <div class="mitra-icon-wrap">🏠</div>
+        <div class="mitra-type">Mitra Rumah Tangga</div>
+        <div class="mitra-name">Rumah Tangga</div>
+        <div class="mitra-desc">Untuk rumah tangga yang ingin berkontribusi menyuplai sisa makanan dan sampah organik dapur secara rutin.</div>
+        <div class="mitra-price-row">
+          <span class="mitra-price">Rp 50k</span>
+          <span class="mitra-price-period">/bulan</span>
+        </div>
+        <ul class="mitra-benefits">
+          <li><span class="msym">check_circle</span>Penjemputan sampah organik 3×/minggu</li>
+          <li><span class="msym">check_circle</span>Laporan kontribusi lingkungan bulanan</li>
+          <li><span class="msym">check_circle</span>Go Points</li>
+          <li><span class="msym">check_circle</span>Akses Maggotku & Leaderboard</li>
+        </ul>
+      </div>
+
+      <!-- KATERING / SPPG / HOTEL -->
+      <div class="mitra-card card-kt" id="card-kt" onclick="selectMitra('kt')">
+        <div class="mitra-check"><span class="msym">check</span></div>
+        <div class="mitra-icon-wrap">🍽️</div>
+        <div class="mitra-type">Mitra Usaha</div>
+        <div class="mitra-name">Katering / SPPG / Hotel</div>
+        <div class="mitra-desc">Untuk pelaku usaha katering, SPPG, restoran, dan hotel yang menghasilkan volume sisa makanan tinggi setiap hari.</div>
+        <div class="mitra-price-row">
+          <span class="mitra-price">Rp 300k</span>
+          <span class="mitra-price-period">/bulan</span>
+        </div>
+        <ul class="mitra-benefits">
+          <li><span class="msym">check_circle</span>Penjemputan harian tidak terbatas</li>
+          <li><span class="msym">check_circle</span>Dashboard analitik volume sampah</li>
+          <li><span class="msym">check_circle</span>Sertifikat kontribusi lingkungan</li>
+          <li><span class="msym">check_circle</span>Laporan ESG untuk perusahaan</li>
+          <li><span class="msym">check_circle</span>Prioritas matching armada</li>
+        </ul>
+      </div>
+
+      <!-- PETERNAK MAGGOT -->
+      <div class="mitra-card card-mg" id="card-mg" onclick="selectMitra('mg')">
+        <div class="mitra-check"><span class="msym">check</span></div>
+        <div class="mitra-icon-wrap">🪲</div>
+        <div class="mitra-type">Mitra Peternak</div>
+        <div class="mitra-name">Peternak Maggot</div>
+        <div class="mitra-desc">Khusus untuk peternak maggot BSF yang membutuhkan pasokan sampah organik berkualitas secara berkelanjutan dari MAG-GO.</div>
+        <div class="mitra-price-row">
+          <span class="mitra-price">Rp 150k</span>
+          <span class="mitra-price-period">/bulan</span>
+        </div>
+        <ul class="mitra-benefits">
+          <li><span class="msym">check_circle</span>Pasokan sampah organik terjadwal</li>
+          <li><span class="msym">check_circle</span>Pemilahan & kualitas terjamin</li>
+          <li><span class="msym">check_circle</span>Akses marketplace penjualan maggot</li>
+          <li><span class="msym">check_circle</span>Koneksi ke petani & peternak mitra</li>
+          <li><span class="msym">check_circle</span>Pendampingan teknis budidaya</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;">
+      <button class="submit-btn" id="btn-next1" style="max-width:320px;margin:0 auto;" onclick="goToStep2()" disabled>
+        <span class="msym">arrow_forward</span> Lanjut Isi Data Diri
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 2: FORM DATA DIRI -->
+  <div id="step2-section" style="display:none;">
+    <div class="section-title" id="form-title">Data Pendaftaran Mitra</div>
+    <div class="section-subtitle" id="form-subtitle">Isi informasi di bawah untuk melengkapi pendaftaran</div>
+
+    <div class="form-section visible" id="reg-form">
+      <div class="form-header" id="form-header">
+        <div class="form-header-icon" id="form-header-icon">🏠</div>
+        <div>
+          <div class="form-header-title" id="form-header-title">Pendaftaran Mitra Rumah Tangga</div>
+          <div class="form-header-sub" id="form-header-sub">Rp 50.000/bulan · Penjemputan 3×/minggu</div>
+        </div>
+      </div>
+
+      <div class="form-grid">
+
+        <div class="form-section-label">📋 Informasi Pribadi / Usaha</div>
+
+        <div class="form-group">
+          <label class="form-label">Nama Lengkap / Nama Usaha *</label>
+          <input type="text" class="form-input" id="f-nama" placeholder="Masukkan nama lengkap" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nomor Telepon / WhatsApp *</label>
+          <input type="tel" class="form-input" id="f-telp" placeholder="08xx-xxxx-xxxx" required/>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Alamat Email *</label>
+          <input type="email" class="form-input" id="f-email" placeholder="nama@email.com" required/>
+        </div>
+
+        <hr class="form-divider"/>
+        <div class="form-section-label">📍 Lokasi Penjemputan</div>
+
+        <div class="form-group full">
+          <label class="form-label">Alamat Lengkap Lokasi Penjemputan *</label>
+          <textarea class="form-textarea" id="f-alamat" placeholder="Jl. ... No. ..., Kelurahan, Kecamatan, Kota/Kabupaten"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Kota / Kabupaten *</label>
+          <input type="text" class="form-input" id="f-kota" placeholder="Surakarta"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Kode Pos</label>
+          <input type="text" class="form-input" id="f-kodepos" placeholder="40xxx"/>
+        </div>
+
+        <hr class="form-divider"/>
+        <div class="form-section-label" id="waste-label">♻️ Informasi Sampah</div>
+
+        <div class="form-group" id="group-jenis">
+          <label class="form-label">Jenis Sampah Utama *</label>
+          <select class="form-select" id="f-jenis">
+            <option value="">-- Pilih jenis sampah --</option>
+            <option value="sisa_makanan">Sisa Makanan / Food Waste</option>
+            <option value="sayur_buah">Sayur & Buah Busuk</option>
+            <option value="ampas">Ampas Kopi / Teh / Jus</option>
+            <option value="campuran">Campuran Organik</option>
+          </select>
+        </div>
+        <div class="form-group" id="group-volume">
+          <label class="form-label">Estimasi Volume per Hari *</label>
+          <select class="form-select" id="f-volume">
+            <option value="">-- Pilih estimasi --</option>
+            <option value="lt5">Kurang dari 5 Kg</option>
+            <option value="5-20">5 – 20 Kg</option>
+            <option value="20-50">20 – 50 Kg</option>
+            <option value="gt50">Lebih dari 50 Kg</option>
+          </select>
+        </div>
+        <div class="form-group full" id="group-jadwal">
+          <label class="form-label">Preferensi Jadwal Penjemputan *</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="jadwal" value="pagi"/> 🌅 Pagi (07.00–10.00)</label>
+            <label class="radio-option"><input type="radio" name="jadwal" value="siang"/> ☀️ Siang (10.00–14.00)</label>
+            <label class="radio-option"><input type="radio" name="jadwal" value="sore"/> 🌇 Sore (14.00–18.00)</label>
+          </div>
+        </div>
+
+        <!-- KHUSUS PETERNAK MAGGOT -->
+        <div class="form-group full" id="group-kapasitas" style="display:none;">
+          <label class="form-label">Kapasitas Kandang Maggot (m²) *</label>
+          <input type="number" class="form-input" id="f-kapasitas" placeholder="Contoh: 50" min="1"/>
+          <span class="form-hint">Kapasitas kandang membantu kami menghitung kebutuhan pasokan organik Anda</span>
+        </div>
+        <div class="form-group full" id="group-pengalaman" style="display:none;">
+          <label class="form-label">Pengalaman Budidaya Maggot</label>
+          <select class="form-select" id="f-pengalaman">
+            <option value="">-- Pilih pengalaman --</option>
+            <option value="baru">Baru mulai (0–6 bulan)</option>
+            <option value="menengah">1–2 tahun</option>
+            <option value="berpengalaman">Lebih dari 2 tahun</option>
+          </select>
+        </div>
+
+        <hr class="form-divider"/>
+        <div class="form-section-label">📎 Dokumen Pendukung (Opsional)</div>
+
+        <div class="form-group full">
+          <label class="form-label">Upload Foto Lokasi / Kandang</label>
+          <div class="upload-box" onclick="document.getElementById('f-upload').click()">
+            <span class="msym">upload_file</span>
+            <p><strong>Klik untuk upload</strong> atau seret file ke sini</p>
+            <p style="margin-top:4px;">JPG, PNG, PDF — Maks. 5MB</p>
+          </div>
+          <input type="file" id="f-upload" accept="image/*,.pdf" style="display:none;" onchange="showUploadName(this)"/>
+          <span class="form-hint" id="upload-name"></span>
+        </div>
+
+        <div class="form-group full">
+          <label class="form-label">Catatan Tambahan</label>
+          <textarea class="form-textarea" id="f-catatan" placeholder="Informasi tambahan yang ingin kamu sampaikan..."></textarea>
+        </div>
+
+        <div class="form-group full">
+          <label class="radio-option" style="border:none;padding:0;">
+            <input type="checkbox" id="f-agree" onchange="checkFormReady()"/>
+            Saya menyetujui <a href="#" style="color:var(--g700);text-decoration:underline;">Syarat & Ketentuan</a> dan <a href="#" style="color:var(--g700);text-decoration:underline;">Kebijakan Privasi</a> MAG-GO
+          </label>
+        </div>
+
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;justify-content:space-between;">
+      <button class="submit-btn" style="max-width:160px;background:var(--surf2);color:var(--txt2);border:2px solid var(--bdr);" onclick="goToStep1()">
+        <span class="msym">arrow_back</span> Kembali
+      </button>
+      <button class="submit-btn" id="btn-next2" style="max-width:280px;" onclick="goToStep3()" disabled>
+        <span class="msym">arrow_forward</span> Lanjut ke Pembayaran
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 3: KONFIRMASI & BAYAR -->
+  <div id="step3-section" style="display:none;">
+    <div class="section-title">Konfirmasi Pendaftaran</div>
+    <div class="section-subtitle">Periksa kembali data & pilih metode pembayaran</div>
+
+    <div class="summary-box visible" id="summary-box">
+      <div class="summary-title">Ringkasan Pendaftaran</div>
+      <div class="summary-row"><span class="summary-label">Nama / Usaha</span><span class="summary-value" id="sum-nama">—</span></div>
+      <div class="summary-row"><span class="summary-label">Kategori Mitra</span><span class="summary-value" id="sum-kategori">—</span></div>
+      <div class="summary-row"><span class="summary-label">Kota</span><span class="summary-value" id="sum-kota">—</span></div>
+      <div class="summary-row"><span class="summary-label">Jadwal Jemput</span><span class="summary-value" id="sum-jadwal">—</span></div>
+      <div class="summary-total-row">
+        <span class="summary-total-label">Iuran Bulanan</span>
+        <span class="summary-total-price" id="sum-harga">Rp 50.000</span>
+      </div>
+    </div>
+
+    <div class="payment-section visible">
+      <div class="payment-title">Pilih Metode Pembayaran</div>
+      <div class="payment-grid">
+        <div class="payment-option" onclick="selectPayment(this,'Transfer Bank')"><span class="pay-icon">🏦</span>Transfer Bank</div>
+        <div class="payment-option" onclick="selectPayment(this,'GoPay')"><span class="pay-icon">💚</span>GoPay</div>
+        <div class="payment-option" onclick="selectPayment(this,'OVO')"><span class="pay-icon">💜</span>OVO</div>
+        <div class="payment-option" onclick="selectPayment(this,'Dana')"><span class="pay-icon">💙</span>Dana</div>
+        <div class="payment-option" onclick="selectPayment(this,'QRIS')"><span class="pay-icon">📲</span>QRIS</div>
+        <div class="payment-option" onclick="selectPayment(this,'ShopeePay')"><span class="pay-icon">🟠</span>ShopeePay</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;justify-content:space-between;margin-top:24px;">
+      <button class="submit-btn" style="max-width:160px;background:var(--surf2);color:var(--txt2);border:2px solid var(--bdr);" onclick="goToStep2Back()">
+        <span class="msym">arrow_back</span> Kembali
+      </button>
+      <button class="submit-btn" id="btn-submit" onclick="submitForm()" disabled>
+        <span class="msym">check_circle</span> Konfirmasi & Daftar Sekarang
+      </button>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-panel" id="success-panel">
+    <div class="success-icon"><span class="msym">check_circle</span></div>
+    <div class="success-title">Pendaftaran Berhasil! 🎉</div>
+    <div class="success-desc">Selamat bergabung sebagai mitra MAG-GO! Tim kami akan menghubungimu dalam 1×24 jam untuk konfirmasi jadwal penjemputan pertama.</div>
+    <div class="success-ref"><span class="msym" style="color:var(--g600)">confirmation_number</span> No. Referensi: <span id="ref-number" style="color:var(--g900)">MG-2025-XXXX</span></div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="Home.html" class="submit-btn" style="max-width:220px;text-decoration:none;">
+        <span class="msym">home</span> Kembali ke Beranda
+      </a>
+      <button class="submit-btn" style="max-width:220px;background:var(--surf2);color:var(--txt2);border:2px solid var(--bdr);" onclick="resetForm()">
+        <span class="msym">add_circle</span> Daftar Mitra Lain
+      </button>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <div class="faq-title">Pertanyaan Umum</div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Apa bedanya mitra rumah tangga, usaha, dan peternak maggot?<span class="msym">keyboard_arrow_down</span></div>
+      <div class="faq-a"><div class="faq-a-inner">Mitra Rumah Tangga cocok untuk keluarga yang ingin berkontribusi menyuplai sisa dapur. Mitra Usaha (Katering/SPPG/Hotel) ditujukan untuk bisnis yang menghasilkan volume sampah besar setiap hari. Mitra Peternak Maggot adalah peternak BSF yang membutuhkan pasokan sampah organik berkualitas dari MAG-GO sebagai pakan maggot.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Apa yang didapat setelah mendaftar?<span class="msym">keyboard_arrow_down</span></div>
+      <div class="faq-a"><div class="faq-a-inner">Setelah daftar, tim MAG-GO akan menghubungimu untuk verifikasi dan penjadwalan penjemputan pertama. Kamu akan mendapat akses ke dashboard mitra, laporan kontribusi, dan poin reward sesuai kategori.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Apakah iuran bisa dibatalkan?<span class="msym">keyboard_arrow_down</span></div>
+      <div class="faq-a"><div class="faq-a-inner">Ya, kamu bisa membatalkan langganan kapan saja. Pembatalan berlaku pada akhir siklus tagihan bulan berjalan tanpa biaya penalti.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Bagaimana cara kerja penjemputan sampah?<span class="msym">keyboard_arrow_down</span></div>
+      <div class="faq-a"><div class="faq-a-inner">Go Pick-Up akan datang ke lokasi sesuai jadwal yang disepakati. Pastikan sampah sudah dipilah (organik & non-organik). Kami menyediakan wadah khusus bagi mitra aktif untuk memudahkan proses pemilahan.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Apakah peternak maggot bisa sekaligus menjual produknya?<span class="msym">keyboard_arrow_down</span></div>
+      <div class="faq-a"><div class="faq-a-inner">Tentu! Peternak maggot mitra Mag-Go mendapat akses ke marketplace untuk menjual maggot, frass (pupuk), dan produk turunan lainnya langsung ke petani dan peternak yang membutuhkan.</div></div>
+    </div>
+  </div>
+
+</main>
+<footer class="footer"><div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand"><a href="Home.html" class="brand" style="text-decoration:none;"><div class="brand-logo"><img src="foto/MAG-Go.PNG"alt="MAG-GO"/></div><span class="brand-name" style="color:white;">Mag-Go</span></a><p>Platform digital pengelolaan food waste berbasis ekonomi sirkular Indonesia.</p></div>
+      <div><div class="footer-heading">Platform</div><ul class="footer-links"><li><a href="Penjemputan.html">Go Pick-Up</a></li><li><a href="marketplace.html">Go Marketplace</a></li><li><a href="Game.html">Maggotku</a></li><li><a href="leaderboard.html">Go Leaderboard</a></li><li><a href="Berlangganan.html">Go Langganan</a></li></ul></div>
+      <div><div class="footer-heading">Mitra</div><ul class="footer-links"><li><a href="#">Pemasok Limbah</a></li><li><a href="#">Peternak Maggot</a></li><li><a href="#">Petani & Peternak</a></li></ul></div>
+      <div><div class="footer-heading">Perusahaan</div><ul class="footer-links"><li><a href="#">Tentang Kami</a></li><li><a href="#">Blog</a></li><li><a href="#">Hubungi Kami</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2026 Mag-Go. Dibuat dengan 🌿 untuk Indonesia.</div><div class="footer-copy">Aplikasi Ekonomi Sirkular Food Waste Indonesia</div></div>
+  </div></footer>
+<nav class="bottom-nav"><div class="bottom-nav-inner"><a href="Home.html" class="bottom-nav-item "><span class="msym">home</span><span>Home</span></a><a href="Penjemputan.html" class="bottom-nav-item "><span class="msym">local_shipping</span><span>Go Pick-Up</span></a><a href="marketplace.html" class="bottom-nav-item "><span class="msym">storefront</span><span>Go Marketplace</span></a><a href="Game.html" class="bottom-nav-item "><span class="msym">sports_esports</span><span>Maggotku</span></a><a href="Berlangganan.html" class="bottom-nav-item active"><span class="msym">workspace_premium</span><span>Go Langganan</span></a></div></nav>
+
+<script>
+let selectedMitra = null;
+let selectedPayment = null;
+
+const mitraData = {
+  rt:  { label: 'Rumah Tangga', icon: '🏠', harga: 'Rp 50.000', sub: 'Rp 50.000/bulan · Penjemputan 2×/minggu', color: '#d97706' },
+  kt:  { label: 'Katering / SPPG / Hotel', icon: '🍽️', harga: 'Rp 300.000', sub: 'Rp 300.000/bulan · Penjemputan harian', color: '#1a6b40' },
+  mg:  { label: 'Peternak Maggot', icon: '🪲', harga: 'Rp 150.000', sub: 'Rp 150.000/bulan · Pasokan terjadwal', color: '#0369a1' }
+};
+
+function selectMitra(type) {
+  selectedMitra = type;
+  document.querySelectorAll('.mitra-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('card-' + type).classList.add('selected');
+  document.getElementById('btn-next1').disabled = false;
+}
+
+function goToStep2() {
+  if (!selectedMitra) return;
+  document.getElementById('step1-section').style.display = 'none';
+  document.getElementById('step2-section').style.display = 'block';
+
+  const m = mitraData[selectedMitra];
+  document.getElementById('form-header-icon').textContent = m.icon;
+  document.getElementById('form-header-title').textContent = 'Pendaftaran Mitra ' + m.label;
+  document.getElementById('form-header-sub').textContent = m.sub;
+
+  // Show/hide maggot-specific fields
+  const isMaggot = selectedMitra === 'mg';
+  document.getElementById('group-kapasitas').style.display = isMaggot ? 'block' : 'none';
+  document.getElementById('group-pengalaman').style.display = isMaggot ? 'block' : 'none';
+  document.getElementById('waste-label').textContent = isMaggot ? '🪲 Kebutuhan Pasokan' : '♻️ Informasi Sampah';
+  if (isMaggot) {
+    document.getElementById('f-jenis').querySelector('option[value=""]').text = '-- Pilih jenis kebutuhan --';
+  }
+
+  setStep(2);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function goToStep1() {
+  document.getElementById('step2-section').style.display = 'none';
+  document.getElementById('step1-section').style.display = 'block';
+  setStep(1);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function goToStep3() {
+  if (!validateForm()) return;
+  document.getElementById('step2-section').style.display = 'none';
+  document.getElementById('step3-section').style.display = 'block';
+  fillSummary();
+  setStep(3);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function goToStep2Back() {
+  document.getElementById('step3-section').style.display = 'none';
+  document.getElementById('step2-section').style.display = 'block';
+  setStep(2);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function setStep(n) {
+  for (let i = 1; i <= 3; i++) {
+    const circ = document.getElementById('step'+i+'-circle');
+    const lbl  = document.getElementById('step'+i+'-label');
+    if (i < n) { circ.className = 'step-circle done'; circ.innerHTML = '<span class="msym" style="font-size:18px;color:white;">check</span>'; lbl.className = 'step-label'; }
+    else if (i === n) { circ.className = 'step-circle active'; circ.textContent = i; lbl.className = 'step-label active'; }
+    else { circ.className = 'step-circle'; circ.textContent = i; lbl.className = 'step-label'; }
+  }
+  for (let i = 1; i <= 2; i++) {
+    document.getElementById('line'+i).className = 'step-line' + (i < n ? ' done' : '');
+  }
+}
+
+function checkFormReady() {
+  const nama = document.getElementById('f-nama').value.trim();
+  const telp = document.getElementById('f-telp').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const alamat = document.getElementById('f-alamat').value.trim();
+  const agree = document.getElementById('f-agree').checked;
+  document.getElementById('btn-next2').disabled = !(nama && telp && email && alamat && agree);
+}
+
+function validateForm() {
+  const fields = ['f-nama','f-telp','f-email','f-alamat'];
+  for (const id of fields) {
+    if (!document.getElementById(id).value.trim()) {
+      document.getElementById(id).focus();
+      document.getElementById(id).style.borderColor = '#dc2626';
+      setTimeout(() => document.getElementById(id).style.borderColor = '', 2000);
+      return false;
+    }
+  }
+  if (!document.getElementById('f-agree').checked) return false;
+  return true;
+}
+
+['f-nama','f-telp','f-email','f-alamat'].forEach(id => {
+  document.getElementById(id).addEventListener('input', checkFormReady);
+});
+
+function fillSummary() {
+  const m = mitraData[selectedMitra];
+  document.getElementById('sum-nama').textContent = document.getElementById('f-nama').value || '—';
+  document.getElementById('sum-kategori').textContent = m.icon + ' ' + m.label;
+  document.getElementById('sum-kota').textContent = document.getElementById('f-kota').value || '—';
+  const jadwalEl = document.querySelector('input[name="jadwal"]:checked');
+  const jadwalMap = { pagi: 'Pagi (07.00–10.00)', siang: 'Siang (10.00–14.00)', sore: 'Sore (14.00–18.00)' };
+  document.getElementById('sum-jadwal').textContent = jadwalEl ? jadwalMap[jadwalEl.value] : '—';
+  document.getElementById('sum-harga').textContent = m.harga + '/bulan';
+}
+
+function selectPayment(el, name) {
+  selectedPayment = name;
+  document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('btn-submit').disabled = false;
+}
+
+function submitForm() {
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="msym" style="animation:spin 1s linear infinite;display:inline-block;">refresh</span> Memproses...';
+  setTimeout(() => {
+    document.getElementById('step3-section').style.display = 'none';
+    document.getElementById('steps-bar').style.display = 'none';
+    const refNum = 'MG-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
+    document.getElementById('ref-number').textContent = refNum;
+    document.getElementById('success-panel').classList.add('visible');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }, 1800);
+}
+
+function resetForm() {
+  selectedMitra = null; selectedPayment = null;
+  document.querySelectorAll('.mitra-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('btn-next1').disabled = true;
+  document.getElementById('success-panel').classList.remove('visible');
+  document.getElementById('steps-bar').style.display = 'flex';
+  document.getElementById('step1-section').style.display = 'block';
+  setStep(1);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function showUploadName(input) {
+  if (input.files[0]) document.getElementById('upload-name').textContent = '✓ ' + input.files[0].name;
+}
+
+function toggleFaq(el) {
+  const ans = el.nextElementSibling;
+  const isOpen = el.classList.contains('open');
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.classList.remove('open');
+    q.nextElementSibling.style.maxHeight = '0';
+  });
+  if (!isOpen) { el.classList.add('open'); ans.style.maxHeight = ans.scrollHeight + 'px'; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html class="light" lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MAG-GO — EduGame: Maggot Garden</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#0f5238","primary-container": "#2d6a4f","primary-fixed": "#b1f0ce","primary-fixed-dim": "#95d4b3",
+          "on-primary": "#ffffff","on-primary-container": "#a8e7c5","on-primary-fixed": "#002114","on-primary-fixed-variant": "#0e5138",
+          "secondary": "#805533","secondary-container": "#fdc39a","secondary-fixed": "#ffdcc5","secondary-fixed-dim": "#f4bb92",
+          "on-secondary": "#ffffff","on-secondary-container": "#794e2e","on-secondary-fixed": "#301400","on-secondary-fixed-variant": "#653d1e",
+          "tertiary": "#753500","tertiary-container": "#9a4700","tertiary-fixed": "#ffdbc8","tertiary-fixed-dim": "#ffb68b",
+          "on-tertiary": "#ffffff","on-tertiary-container": "#ffd0b5","on-tertiary-fixed": "#321200","on-tertiary-fixed-variant": "#753400",
+          "background": "#f9f9f8","surface": "#f9f9f8","surface-bright": "#f9f9f8","surface-dim": "#d9dad9",
+          "surface-container": "#edeeed","surface-container-low": "#f3f4f3","surface-container-high": "#e7e8e7",
+          "surface-container-highest": "#e1e3e2","surface-container-lowest": "#ffffff","surface-tint": "#2c694e","surface-variant": "#e1e3e2",
+          "on-background": "#191c1c","on-surface": "#191c1c","on-surface-variant": "#404943",
+          "outline": "#707973","outline-variant": "#bfc9c1",
+          "inverse-primary": "#95d4b3","inverse-surface": "#2e3131","inverse-on-surface": "#f0f1f0",
+          "error": "#ba1a1a","error-container": "#ffdad6","on-error": "#ffffff","on-error-container": "#93000a",
+        },
+        borderRadius: { "DEFAULT": "0.25rem","lg": "0.5rem","xl": "0.75rem","full": "9999px" },
+        spacing: { "xs":"4px","base":"8px","sm":"12px","md":"24px","lg":"40px","xl":"64px","gutter":"24px","margin-mobile":"16px","container-max":"1280px" },
+        fontFamily: { "body-md":["Lexend"],"body-lg":["Lexend"],"label-sm":["Lexend"],"label-md":["Lexend"],"title-lg":["Lexend"],"headline-md":["Lexend"],"headline-lg":["Lexend"],"display-lg":["Lexend"] },
+        fontSize: {
+          "label-sm":["12px",{"lineHeight":"16px","fontWeight":"500"}],
+          "label-md":["14px",{"lineHeight":"20px","letterSpacing":"0.02em","fontWeight":"600"}],
+          "body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],
+          "body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],
+          "title-lg":["20px",{"lineHeight":"28px","fontWeight":"500"}],
+          "headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],
+          "headline-lg":["32px",{"lineHeight":"40px","fontWeight":"600"}],
+          "display-lg":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"700"}],
+        }
+      }
+    }
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
+  .maggot-float { animation: float 3.5s ease-in-out infinite; }
+  @keyframes float { 0%,100% { transform: translateY(0) scaleX(1); } 50% { transform: translateY(-18px) scaleX(1.06); } }
+  .maggot-body { transition: all 0.3s ease; }
+  .maggot-eye { animation: blink 5s ease-in-out infinite; }
+  @keyframes blink { 0%,90%,100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+  .maggot-smile { animation: smile-pulse 2s ease-in-out infinite; }
+  @keyframes smile-pulse { 0%,100% { opacity:0.3; transform: scaleX(1); } 50% { opacity:0.6; transform: scaleX(1.1); } }
+  .maggot-cheek { animation: blush 3s ease-in-out infinite; }
+  @keyframes blush { 0%,100% { opacity:0.3; } 50% { opacity:0.6; } }
+  .progress-glow { box-shadow: 0 0 20px rgba(149, 212, 179, 0.55); }
+  @keyframes progress-shine { from { transform: translateX(-100%); } to { transform: translateX(400%); } }
+  .progress-shine::after { content:''; position:absolute; top:0; left:0; bottom:0; width:25%; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.5),transparent); animation: progress-shine 2s ease-in-out infinite; }
+  .reward-card { transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s ease; }
+  .reward-card:hover { transform: translateY(-8px) scale(1.01); }
+  .reward-card:hover .reward-icon { transform: rotate(12deg) scale(1.12); }
+  .video-thumb-wrap { position:relative; overflow:hidden; border-radius:1rem; }
+  .video-thumb-wrap img { transition: transform 0.5s ease; }
+  .video-thumb-wrap:hover img { transform: scale(1.04); }
+  .play-ring { width:48px; height:48px; border-radius:50%; background: rgba(15,82,56,0.92); display:flex; align-items:center; justify-content:center; box-shadow: 0 8px 32px rgba(15,82,56,0.4); transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s ease; }
+  .video-thumb-wrap:hover .play-ring { transform:scale(1.14); box-shadow: 0 12px 40px rgba(15,82,56,0.5); }
+  .quiz-opt { transition: all 0.18s cubic-bezier(.34,1.56,.64,1); border: 2px solid transparent; }
+  .quiz-opt:not(:disabled):hover { transform: translateX(6px); border-color: #0f5238; }
+  .quiz-opt.correct { background: #e8f5ee !important; border-color: #2d6a4f !important; color: #0f5238 !important; }
+  .quiz-opt.wrong   { background: #fde8e8 !important; border-color: #ba1a1a !important; color: #ba1a1a !important; }
+  @keyframes xp-pulse { 0%,100% { box-shadow:0 0 0 0 rgba(177,240,206,0.5); } 50% { box-shadow:0 0 0 8px rgba(177,240,206,0); } }
+  .xp-badge { animation: xp-pulse 2.5s ease-in-out infinite; }
+  @keyframes feed-bounce { 0%,100%{transform:scale(1)} 30%{transform:scale(1.06)} 60%{transform:scale(0.97)} }
+  .feed-active { animation: feed-bounce 0.4s ease; }
+  .leader-row { transition: all 0.18s ease; }
+  .leader-row:hover { transform: translateX(4px); background: rgba(177,240,206,0.18); }
+  .dot-bg { background-image: radial-gradient(circle, rgba(45,106,79,0.12) 1px, transparent 1px); background-size: 32px 32px; }
+  @keyframes fire { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(1.12)} }
+  .fire-icon { animation: fire 1s ease-in-out infinite; display:inline-block; }
+  html { scroll-behavior: smooth; }
+  #toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(60px); background:#0f5238; color:#fff; padding:12px 28px; border-radius:9999px; font-family:'Lexend',sans-serif; font-weight:600; font-size:14px; box-shadow:0 8px 32px rgba(0,0,0,0.18); z-index:9999; transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1); pointer-events:none; white-space:nowrap; }
+  #toast.show { transform:translateX(-50%) translateY(0); }
+  .vid-card { transition: transform 0.22s ease, box-shadow 0.22s ease; }
+  .vid-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(15,82,56,0.14); }
+
+/* ═══ NAVBAR & FOOTER — same as Berlangganan ═══ */
+.navbar{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr,#d4e8db);padding:12px 0;box-shadow:0 2px 12px rgba(10,46,30,.06);}
+.navbar-inner{max-width:1280px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.brand-logo{width:44px;height:44px;border-radius:14px;overflow:hidden;}
+.brand-logo img{width:100%;height:100%;object-fit:cover;}
+.brand-name{font-family:'Syne','Lexend',sans-serif;font-size:22px;font-weight:800;color:#0f3d28;letter-spacing:-.5px;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:50px;font-size:14px;font-weight:600;color:#3a5f4a;text-decoration:none;transition:all .2s;}
+.nav-link:hover{background:#eefaf2;color:#1a6b40;}
+.nav-link.active{background:#0f3d28;color:white;}
+.nav-link .msym2{font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;display:inline-block;line-height:1;white-space:nowrap;vertical-align:middle;font-size:18px;}
+.nav-link.active .msym2{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;}
+.nav-actions{display:flex;align-items:center;gap:10px;}
+.btn-nav{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;text-decoration:none;font-family:inherit;}
+.btn-nav-outline{background:transparent;color:#0f3d28;border:2px solid #d4e8db;}.btn-nav-outline:hover{border-color:#34b86a;background:#eefaf2;}
+.btn-nav-primary{background:#0f3d28;color:white;border:none;}.btn-nav-primary:hover{background:#1a6b40;}
+/* FOOTER */
+.maggo-footer{background:#0a2e1e;padding:56px 32px 32px;margin-top:80px;}
+.maggo-footer-inner{max-width:1280px;margin:0 auto;}
+.maggo-footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px;}
+.maggo-footer-brand p{color:rgba(255,255,255,.5);font-size:14px;margin-top:12px;line-height:1.7;max-width:260px;}
+.maggo-footer-heading{font-family:'Syne','Lexend',sans-serif;font-size:13px;font-weight:700;color:white;margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px;}
+.maggo-footer-links{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.maggo-footer-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:14px;transition:color .2s;}
+.maggo-footer-links a:hover{color:#5fd08a;}
+.maggo-footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;display:flex;justify-content:space-between;}
+.maggo-footer-copy{font-size:13px;color:rgba(255,255,255,.4);}
+/* BOTTOM NAV override */
+.mag-bottom-nav{background:rgba(255,255,255,.96) !important;border-top:1px solid #d4e8db !important;box-shadow:0 -2px 12px rgba(10,46,30,.08) !important;}
+.mag-bnav-item .mi{color:#6b8f7a !important;}
+.mag-bnav-item span:last-child{color:#6b8f7a !important;}
+.mag-bnav-item.active .mi{color:#1a6b40 !important;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24 !important;}
+.mag-bnav-item.active span:last-child{color:#1a6b40 !important;}
+@media(max-width:768px){.maggo-footer-top{grid-template-columns:1fr 1fr;gap:28px;}.maggo-footer-bottom{flex-direction:column;gap:10px;text-align:center;} .nav-links{display:none !important;}}
+
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+
+<header class="navbar"><div class="navbar-inner">
+    <a href="Home.html" class="brand"><div class="brand-logo"><img src="foto/MAG-Go.PNG" alt="MAG-GO"/></div><span class="brand-name">Mag-Go</span></a>
+    <nav class="nav-links">
+      <a href="Home.html" class="nav-link"><span class="msym2">home</span>Home</a>
+      <a href="Penjemputan.html" class="nav-link"><span class="msym2">local_shipping</span>Go Pick-Up</a>
+      <a href="marketplace.html" class="nav-link"><span class="msym2">storefront</span>Go Marketplace</a>
+      <a href="Game.html" class="nav-link active"><span class="msym2">sports_esports</span>Maggotku</a>
+      <a href="leaderboard.html" class="nav-link"><span class="msym2">leaderboard</span>Leaderboard</a>
+      <a href="Berlangganan.html" class="nav-link"><span class="msym2">workspace_premium</span>Go Langganan</a>
+    </nav>
+  </div></header>
+
+<!-- ══════════ MAIN ══════════ -->
+<main class="max-w-[1280px] mx-auto px-margin-mobile md:px-lg py-lg">
+
+  <!-- ── BENTO GRID ── -->
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+
+    <!-- ── GAME ARENA ── -->
+    <section class="md:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-[32px] p-lg shadow-[0_4px_24px_rgba(15,82,56,0.08)] relative overflow-hidden flex flex-col items-center justify-center min-h-[520px] dot-bg">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-40 bg-primary-fixed/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute top-lg left-lg right-lg flex justify-between items-start z-10 flex-wrap gap-sm">
+        <div>
+          <h1 class="font-headline-lg text-headline-lg text-primary">Taman Maggot</h1>
+          <p class="font-body-md text-on-surface-variant mt-0.5">Level 4 — Organic Recycler</p>
+        </div>
+        <div class="flex gap-sm flex-wrap">
+          <div class="bg-tertiary-fixed text-on-tertiary-fixed-variant px-sm py-xs rounded-full font-label-md flex items-center gap-xs">
+            <span class="fire-icon">🔥</span> Streak 7 hari
+          </div>
+          <div class="bg-primary-container text-on-primary-container px-sm py-xs rounded-full font-label-md flex items-center gap-xs">
+            <span class="material-symbols-outlined text-[16px]" style="font-variation-settings:'FILL' 1;">eco</span>
+            <span id="score-badge">2,450</span> XP
+          </div>
+        </div>
+      </div>
+      <div class="relative group cursor-pointer py-xl mt-8" onclick="feedMaggot()">
+        <div class="maggot-float relative z-20">
+          <svg width="220" height="110" viewBox="0 0 220 110" class="maggot-body drop-shadow-xl">
+            <ellipse cx="110" cy="105" rx="80" ry="8" fill="rgba(0,0,0,0.07)"/>
+            <ellipse cx="110" cy="55" rx="95" ry="42" fill="#ffdcc5"/>
+            <ellipse cx="55"  cy="55" rx="38" ry="36" fill="#ffe8d6"/>
+            <ellipse cx="110" cy="55" rx="38" ry="36" fill="#ffdcc5"/>
+            <ellipse cx="165" cy="55" rx="38" ry="36" fill="#f4bb92"/>
+            <line x1="72"  y1="20" x2="72"  y2="90" stroke="#e8a87a" stroke-width="1.5" opacity="0.4"/>
+            <line x1="128" y1="20" x2="128" y2="90" stroke="#e8a87a" stroke-width="1.5" opacity="0.4"/>
+            <ellipse cx="80" cy="32" rx="28" ry="12" fill="white" opacity="0.25"/>
+            <g class="maggot-eye">
+              <circle cx="174" cy="44" r="8" fill="#301400"/>
+              <circle cx="196" cy="44" r="8" fill="#301400"/>
+              <circle cx="176" cy="41" r="2.5" fill="white" opacity="0.7"/>
+              <circle cx="198" cy="41" r="2.5" fill="white" opacity="0.7"/>
+            </g>
+            <ellipse cx="168" cy="56" rx="7" ry="4" fill="#f4874b" class="maggot-cheek"/>
+            <ellipse cx="202" cy="56" rx="7" ry="4" fill="#f4874b" class="maggot-cheek"/>
+            <path d="M178 56 Q187 63 197 56" stroke="#301400" stroke-width="2.5" fill="none" stroke-linecap="round" class="maggot-smile"/>
+            <line x1="65" y1="88" x2="55" y2="105" stroke="#e8a87a" stroke-width="3" stroke-linecap="round"/>
+            <line x1="110" y1="90" x2="100" y2="107" stroke="#e8a87a" stroke-width="3" stroke-linecap="round"/>
+            <line x1="155" y1="88" x2="145" y2="105" stroke="#e8a87a" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <div class="absolute inset-0 pointer-events-none" id="particle-container"></div>
+        </div>
+        <p class="text-center text-on-surface-variant font-label-sm mt-2 opacity-60 group-hover:opacity-100 transition-opacity">Klik untuk memberi makan! 🍃</p>
+      </div>
+      <div class="w-full max-w-md z-10 space-y-md">
+        <div>
+          <div class="flex justify-between items-end mb-xs">
+            <span class="font-label-md text-primary">Garden Growth</span>
+            <span class="font-headline-md text-primary" id="score-text">65 / 100</span>
+          </div>
+          <div class="h-7 w-full bg-surface-container-high rounded-full p-1 overflow-hidden relative">
+            <div class="h-full bg-gradient-to-r from-primary via-primary-fixed-dim to-primary-fixed rounded-full transition-all duration-700 ease-out progress-glow progress-shine relative" id="progress-bar" style="width:65%"></div>
+          </div>
+          <div class="flex justify-between mt-xs">
+            <span class="font-label-sm text-on-surface-variant">Level 4</span>
+            <span class="font-label-sm text-on-surface-variant">Level 5 →</span>
+          </div>
+        </div>
+        <div class="flex gap-sm">
+          <button id="feed-btn" class="flex-1 bg-tertiary text-on-tertiary h-14 rounded-xl font-headline-md flex items-center justify-center gap-sm hover:bg-tertiary/90 active:scale-95 transition-all shadow-md" onclick="feedMaggot()">
+            <span class="material-symbols-outlined">compost</span>
+            Beri Makan
+          </button>
+          <button class="w-14 h-14 border-2 border-outline rounded-xl flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-primary transition-all" onclick="showToast('Link berhasil disalin! 📋')">
+            <span class="material-symbols-outlined">share</span>
+          </button>
+          <button class="w-14 h-14 border-2 border-outline rounded-xl flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-primary transition-all" onclick="resetGame()">
+            <span class="material-symbols-outlined">refresh</span>
+          </button>
+        </div>
+        <div class="grid grid-cols-3 gap-sm">
+          <div class="bg-surface-container-low rounded-xl p-sm text-center border border-outline-variant">
+            <div class="font-headline-md text-primary" id="feed-count">0</div>
+            <div class="font-label-sm text-on-surface-variant">Diberi makan</div>
+          </div>
+          <div class="bg-surface-container-low rounded-xl p-sm text-center border border-outline-variant">
+            <div class="font-headline-md text-secondary">2 Jenis</div>
+            <div class="font-label-sm text-on-surface-variant">Limbah disetor</div>
+          </div>
+          <div class="bg-surface-container-low rounded-xl p-sm text-center border border-outline-variant">
+            <div class="font-headline-md text-tertiary" id="pts-display">350</div>
+            <div class="font-label-sm text-on-surface-variant">Poin kamu</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="md:col-span-4 flex flex-col gap-gutter">
+      <!-- MILESTONES -->
+      <div class="bg-secondary-container text-on-secondary-container p-md rounded-[24px] shadow-[0_4px_20px_rgba(128,85,51,0.12)]">
+        <div class="flex justify-between items-center mb-md">
+          <h2 class="font-title-lg">Active Milestones 🎯</h2>
+          <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">stars</span>
+        </div>
+        <div class="space-y-sm" id="milestones">
+          <div class="flex items-center gap-md bg-surface/40 p-sm rounded-xl border border-white/20 hover:bg-surface/60 transition-colors">
+            <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-primary shadow-sm flex-shrink-0">
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">potted_plant</span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="font-label-md truncate">Tanaman Hias</p>
+              <p class="font-label-sm opacity-75">Claimed at 50 pts ✓</p>
+            </div>
+            <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">check_circle</span>
+          </div>
+          <div class="flex items-center gap-md bg-surface/40 p-sm rounded-xl border border-white/20 hover:bg-surface/60 transition-colors">
+            <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-tertiary shadow-sm flex-shrink-0">
+              <span class="material-symbols-outlined">redeem</span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="font-label-md truncate">Marchandise</p>
+              <p class="font-label-sm opacity-75">Unlock at 100 pts</p>
+            </div>
+            <div class="text-right flex-shrink-0">
+              <div class="font-label-sm opacity-75 mb-0.5">65/100</div>
+              <div class="w-16 h-1.5 bg-white/30 rounded-full overflow-hidden">
+                <div class="h-full bg-primary rounded-full" style="width:65%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-md bg-surface/40 p-sm rounded-xl border border-white/20 hover:bg-surface/60 transition-colors">
+            <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-secondary shadow-sm flex-shrink-0">
+              <span class="material-symbols-outlined">shopping_bag</span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="font-label-md truncate">Mag-Go Tote</p>
+              <p class="font-label-sm opacity-75">Unlock at 750 pts</p>
+            </div>
+            <div class="text-right flex-shrink-0">
+              <div class="font-label-sm opacity-75 mb-0.5">65/750</div>
+              <div class="w-16 h-1.5 bg-white/30 rounded-full overflow-hidden">
+                <div class="h-full bg-primary rounded-full" style="width:13%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KUIS KILAT -->
+      <div class="bg-surface-container-lowest border border-outline-variant p-md rounded-[24px] shadow-sm">
+        <div class="flex justify-between items-center mb-md">
+          <h3 class="font-label-md text-on-surface flex items-center gap-xs uppercase tracking-wider">
+            <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings:'FILL' 1;">quiz</span>
+            Kuis Kilat 🧠
+          </h3>
+          <span class="font-label-sm text-primary bg-primary-fixed rounded-full px-sm py-xs">benar</span>
+        </div>
+        <div class="font-label-sm text-on-surface-variant mb-sm" id="q-counter">Soal 1 dari 5</div>
+        <div class="h-1.5 bg-surface-container-high rounded-full mb-md overflow-hidden">
+          <div class="h-full bg-primary rounded-full transition-all duration-500" id="q-prog" style="width:20%"></div>
+        </div>
+        <p class="font-label-md text-on-surface mb-md leading-relaxed" id="q-text"></p>
+        <div class="space-y-xs" id="q-opts"></div>
+        <div class="hidden mt-sm p-sm rounded-xl font-label-sm" id="q-feedback"></div>
+        <button class="hidden w-full mt-md py-sm bg-primary text-on-primary rounded-xl font-label-md hover:bg-primary/90 transition-colors" id="q-next" onclick="nextQuiz()">Lanjut soal →</button>
+      </div>
+
+      <!-- MINI LEADERBOARD -->
+      <div class="bg-surface-container-lowest border border-outline-variant p-md rounded-[24px] shadow-sm">
+        <div class="flex justify-between items-center mb-md">
+          <h3 class="font-label-md text-on-surface flex items-center gap-xs uppercase tracking-wider">
+            <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings:'FILL' 1;">leaderboard</span>
+            Pahlawan Limbah 🏆
+          </h3>
+          <a class="text-[10px] font-bold text-primary hover:underline uppercase tracking-wider" href="#">Lihat semua</a>
+        </div>
+        <div class="space-y-xs" id="mini-leader"></div>
+        <div class="mt-md pt-md border-t border-outline-variant/30 flex items-center gap-sm px-xs">
+          <div class="w-10 h-10 rounded-full bg-primary-fixed border-2 border-primary/20 flex items-center justify-center font-bold text-primary text-xs flex-shrink-0">12</div>
+          <div class="flex-1 min-w-0">
+            <p class="font-label-sm text-on-surface truncate">Kamu (Muhammad Illafi)</p>
+            <p class="text-[10px] text-on-surface-variant font-medium">Rank 12 • Steady Contributor</p>
+          </div>
+          <span class="material-symbols-outlined text-primary text-[18px]">trending_up</span>
+        </div>
+      </div>
+
+      <!-- WASTE LOGS -->
+      <div class="bg-surface-container-low border border-outline-variant p-md rounded-[24px]">
+        <h3 class="font-label-md text-on-surface-variant mb-md flex items-center gap-xs uppercase tracking-wider">
+          <span class="material-symbols-outlined text-[18px]">inventory_2</span> Waste Logs
+        </h3>
+        <div class="grid grid-cols-2 gap-sm">
+          <div class="bg-surface p-sm rounded-xl border border-outline-variant flex flex-col items-center text-center gap-xs hover:border-primary transition-colors">
+            <span class="material-symbols-outlined text-secondary text-[32px]" style="font-variation-settings:'FILL' 1;">egg_alt</span>
+            <span class="font-label-sm">Sisa Dapur</span>
+            <span class="font-label-md text-primary">x3</span>
+          </div>
+          <div class="bg-surface p-sm rounded-xl border border-outline-variant flex flex-col items-center text-center gap-xs hover:border-primary transition-colors opacity-50">
+            <span class="material-symbols-outlined text-on-surface-variant text-[32px]">yakitori</span>
+            <span class="font-label-sm">Daging</span>
+            <span class="font-label-md">x0</span>
+          </div>
+        </div>
+        <button class="w-full mt-md py-sm border-2 border-dashed border-outline-variant rounded-xl font-label-md text-on-surface-variant hover:border-primary hover:text-primary transition-colors">
+          + Catat Limbah Baru
+        </button>
+      </div>
+    </aside>
+  </div><!-- /bento -->
+
+  <!-- ══════════ REWARDS ══════════ -->
+  <section class="mt-xl">
+    <div class="flex justify-between items-end mb-lg flex-wrap gap-sm">
+      <div>
+        <h2 class="font-headline-lg text-on-background">Go Rewards 🎁</h2>
+        <p class="font-body-md text-on-surface-variant">Tukar poin kamu dengan hadiah nyata yang bermanfaat</p>
+      </div>
+      <div class="flex items-center gap-sm">
+        <div class="bg-primary-fixed rounded-full px-md py-sm font-label-md text-primary flex items-center gap-xs">
+          🪙 <span id="pts-bar">350</span> poin tersedia
+        </div>
+        <button class="text-primary font-label-md flex items-center gap-xs hover:underline">
+          Lihat Semua <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+        </button>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter" id="rewards-grid"></div>
+  </section>
+
+  <!-- ══════════ EDUKASI ══════════ -->
+  <section class="mt-xl bg-surface-container-low rounded-[32px] p-lg md:p-xl border border-outline-variant">
+    <div class="text-center mb-xl">
+      <div class="inline-flex items-center gap-xs bg-primary-fixed text-primary rounded-full px-md py-xs font-label-md mb-md">
+        <span class="material-symbols-outlined text-[16px]" style="font-variation-settings:'FILL' 1;">school</span>
+        Video Edukasi Maggot BSF
+      </div>
+      <h2 class="font-headline-lg text-on-background mb-sm">Revolusi Biokonversi: Dari Sampah Jadi Berkah 🌍</h2>
+      <p class="font-body-lg text-on-surface-variant max-w-2xl mx-auto">Pelajari bagaimana Maggot BSF menjadi pahlawan tak terlihat dalam menjaga ekosistem kita.</p>
+    </div>
+
+    <!-- VIDEO GRID — bersih tanpa angka & tanpa badge poin -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-gutter mb-xl" id="video-grid"></div>
+
+    <!-- FEATURED VIDEO -->
+    <div class="max-w-3xl mx-auto mb-xl">
+      <p class="font-label-md text-on-surface-variant uppercase tracking-wider mb-md flex items-center gap-xs">
+        <span class="material-symbols-outlined text-[16px]" style="font-variation-settings:'FILL' 1;">star</span>
+        Video Unggulan
+      </p>
+      <div class="video-thumb-wrap aspect-video bg-inverse-surface rounded-2xl overflow-hidden shadow-2xl border-4 border-surface cursor-pointer" onclick="loadFeatured()">
+        <img id="featured-thumb" src="https://img.youtube.com/vi/n3aFWqeRbSU/maxresdefault.jpg" alt="Featured Video" class="w-full h-full object-cover opacity-70"/>
+        <div class="absolute inset-0 flex flex-col items-center justify-center gap-md" id="featured-play">
+          <div class="play-ring" style="width:64px;height:64px">
+            <span class="material-symbols-outlined text-on-primary text-[40px] ml-1" style="font-variation-settings:'FILL' 1;">play_arrow</span>
+          </div>
+          <div class="bg-black/50 backdrop-blur-sm rounded-xl px-md py-sm text-center">
+            <p class="text-white font-label-md">Maggot BSF: Si Pengurai Sampah Jadi Cuan</p>
+            <p class="text-white/70 font-label-sm mt-0.5">Klik untuk memutar</p>
+          </div>
+        </div>
+        <iframe id="featured-frame" class="absolute inset-0 w-full h-full hidden" allowfullscreen allow="autoplay"></iframe>
+      </div>
+    </div>
+
+    <div class="flex justify-center">
+      <button class="px-xl py-md bg-primary text-on-primary font-headline-md rounded-xl hover:scale-105 active:scale-95 transition-all shadow-lg flex items-center gap-sm" onclick="showToast('Terima kasih! 💚 Silakan setor limbah melalui menu Ekspedisi.')">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">volunteer_activism</span>
+        Mulai Donasi Sekarang
+      </button>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="maggo-footer"><div class="maggo-footer-inner">
+    <div class="maggo-footer-top">
+      <div class="maggo-footer-brand">
+        <a href="Home.html" class="brand" style="text-decoration:none;">
+          <div class="brand-logo"><img src="foto/MAG-Go.PNG" alt="MAG-GO"/></div>
+          <span class="brand-name" style="color:white;">Mag-Go</span>
+        </a>
+        <p>Platform digital pengelolaan food waste berbasis ekonomi sirkular Indonesia.</p>
+      </div>
+      <div>
+        <div class="maggo-footer-heading">Platform</div>
+        <ul class="maggo-footer-links">
+          <li><a href="Penjemputan.html">Go Pick-Up</a></li>
+          <li><a href="marketplace.html">Go Marketplace</a></li>
+          <li><a href="Game.html">Go Game</a></li>
+          <li><a href="leaderboard.html">Go Leaderboard</a></li>
+          <li><a href="Berlangganan.html">Go Premium</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="maggo-footer-heading">Mitra</div>
+        <ul class="maggo-footer-links">
+          <li><a href="#">Pemasok Limbah</a></li>
+          <li><a href="#">Peternak Maggot</a></li>
+          <li><a href="#">Petani &amp; Peternak</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="maggo-footer-heading">Perusahaan</div>
+        <ul class="maggo-footer-links">
+          <li><a href="#">Tentang Kami</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Hubungi Kami</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="maggo-footer-bottom">
+      <div class="maggo-footer-copy">© 2026 Mag-Go. Dibuat dengan 🌿 untuk Indonesia.</div>
+      <div class="maggo-footer-copy">Aplikasi Ekonomi Sirkular Food Waste Indonesia</div>
+    </div>
+  </div></footer>
+
+<div id="toast"></div>
+
+<script>
+// ─── STATE ───
+let score = 65, maxScore = 100, xp = 2450, points = 350, feedCount = 0;
+let qIdx = 0, qAnswered = false, qScore = 0;
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+function updateUI() {
+  document.getElementById('progress-bar').style.width = (score/maxScore*100)+'%';
+  document.getElementById('score-text').textContent = score+' / '+maxScore;
+  document.getElementById('score-badge').textContent = xp.toLocaleString();
+  document.getElementById('pts-display').textContent = points;
+  document.getElementById('pts-bar').textContent = points;
+  document.getElementById('feed-count').textContent = feedCount;
+  renderRewards();
+}
+function feedMaggot() {
+  if (score >= maxScore) { showToast('🎉 Level Penuh! Klaim Mystery Gift dulu!'); return; }
+  score += 5; xp += 50; points += 5; feedCount++;
+  if (score > maxScore) score = maxScore;
+  updateUI(); createParticles();
+  const btn = document.getElementById('feed-btn');
+  btn.classList.add('feed-active');
+  setTimeout(() => btn.classList.remove('feed-active'), 400);
+  if (score >= maxScore) showToast('🏆 Level Complete! +200 XP bonus!');
+  else showToast('🍃 Maggot kenyang! +5 poin +50 XP');
+}
+function resetGame() {
+  score = 65; feedCount = 0;
+  document.getElementById('progress-bar').style.width = '65%';
+  document.getElementById('score-text').textContent = '65 / 100';
+  document.getElementById('feed-count').textContent = '0';
+  showToast('🔄 Game direset!');
+}
+function createParticles() {
+  const c = document.getElementById('particle-container');
+  const emojis = ['🍃','🌿','✨','♻️','🌱'];
+  for (let i = 0; i < 10; i++) {
+    const p = document.createElement('div');
+    p.style.cssText = `position:absolute;font-size:${14+Math.random()*10}px;pointer-events:none;user-select:none;`;
+    p.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    p.style.left = (30+Math.random()*40)+'%';
+    p.style.top = (20+Math.random()*40)+'%';
+    c.appendChild(p);
+    const dx = (Math.random()-0.5)*180, dy = -(60+Math.random()*120);
+    p.animate([
+      {transform:'translate(0,0) scale(1)',opacity:1},
+      {transform:`translate(${dx}px,${dy}px) scale(0)`,opacity:0}
+    ],{duration:900+Math.random()*400,easing:'cubic-bezier(0,.9,.57,1)'}).onfinish=()=>p.remove();
+  }
+}
+
+// ─── QUIZ ───
+const quizData = [
+  {q:'Apa kepanjangan BSF dalam budidaya maggot?',opts:['Black Soldier Fly','Big Size Fly','Blue Soldier Fish','Bio Solid Fertilizer'],ans:0},
+  {q:'Berapa kandungan protein dalam maggot BSF segar?',opts:['5–10%','15–20%','30–45%','60–70%'],ans:2},
+  {q:'Limbah organik yang TIDAK cocok untuk pakan maggot?',opts:['Sisa sayuran','Ampas kopi','Limbah detergen kimia','Kulit buah'],ans:2},
+  {q:'Produk turunan maggot yang bisa dijual selain maggot segar?',opts:['Minyak kelapa','Tepung maggot & pupuk organik','Bioetanol','Lilin lebah'],ans:1},
+  {q:'Mengapa motor listrik dipilih untuk armada ekspedisi limbah?',opts:['Lebih cepat','Lebih murah beli','Ramah lingkungan & hemat OPEX jangka panjang','Lebih mudah dirawat'],ans:2},
+];
+function renderQuiz() {
+  const d = quizData[qIdx];
+  document.getElementById('q-counter').textContent = `Soal ${qIdx+1} dari ${quizData.length}`;
+  document.getElementById('q-prog').style.width = ((qIdx+1)/quizData.length*100)+'%';
+  document.getElementById('q-text').textContent = d.q;
+  const opts = document.getElementById('q-opts');
+  opts.innerHTML = '';
+  d.opts.forEach((o,i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt w-full text-left px-sm py-xs bg-surface-container-low rounded-xl font-label-sm text-on-surface hover:bg-surface-container transition-all';
+    btn.textContent = `${['A','B','C','D'][i]}. ${o}`;
+    btn.onclick = () => answerQuiz(i, btn);
+    opts.appendChild(btn);
+  });
+  document.getElementById('q-feedback').classList.add('hidden');
+  document.getElementById('q-next').classList.add('hidden');
+  qAnswered = false;
+}
+function answerQuiz(i, btn) {
+  if (qAnswered) return; qAnswered = true;
+  const d = quizData[qIdx], fb = document.getElementById('q-feedback');
+  document.querySelectorAll('#q-opts button').forEach((b,j) => {
+    b.disabled = true;
+    if (j === d.ans) b.classList.add('correct');
+  });
+  if (i === d.ans) {
+    qScore += 20; points += 20; xp += 30; updateUI();
+    btn.classList.add('correct');
+    fb.textContent = '🎉 Benar! +20 poin +30 XP'; fb.className = 'p-sm rounded-xl font-label-sm bg-green-50 text-green-800 mt-sm';
+    showToast('🎉 Benar! +20 poin');
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = `❌ Salah. Jawaban: "${d.opts[d.ans]}"`; fb.className = 'p-sm rounded-xl font-label-sm bg-red-50 text-red-800 mt-sm';
+  }
+  fb.classList.remove('hidden');
+  if (qIdx < quizData.length-1) document.getElementById('q-next').classList.remove('hidden');
+  else setTimeout(()=>showToast(`🏁 Kuis selesai! Total +${qScore} poin`),300);
+}
+function nextQuiz() { qIdx=(qIdx+1)%quizData.length; renderQuiz(); }
+renderQuiz();
+
+// ─── LEADERBOARD ───
+const leaders = [
+  {rank:1,emoji:'👑',name:'Feri Kurniawan',score:18900},
+  {rank:2,emoji:'🥈',name:'Aruliza',score:12400},
+  {rank:3,emoji:'🥉',name:'Aprilia',score:10100},
+];
+function renderLeader() {
+  const el = document.getElementById('mini-leader');
+  el.innerHTML = leaders.map((l,i) => `
+    <div class="leader-row flex items-center gap-sm p-xs rounded-xl cursor-pointer">
+      <span class="font-label-md w-5 text-center ${i===0?'text-yellow-500':i===1?'text-gray-400':'text-orange-400'}">${i===0?'🥇':i===1?'🥈':'🥉'}</span>
+      <div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center font-bold text-primary text-xs flex-shrink-0">${l.emoji}</div>
+      <div class="flex-1 min-w-0"><p class="font-label-sm text-on-surface truncate">${l.name}</p></div>
+      <p class="font-label-sm text-primary font-bold">${(l.score/1000).toFixed(1)}k</p>
+    </div>`).join('');
+}
+renderLeader();
+
+// ─── REWARDS ───
+const rewardData = [
+  {icon:'🌿',img:'',name:'Tanaman Hias',desc:'Sukuelen mini untuk mempercantik ruang kerjamu.',pts:50,claimed:true},
+  {icon:'🎁',img:'',name:'marchandise',desc:'Merch eksklusif menunggumu.',pts:100,claimed:false},
+  {icon:'🧴',img:'',name:'Pupuk Organik',desc:'1L pupuk cair organik ultra-concentrate dari maggot BSF.',pts:250,claimed:false},
+  {icon:'👜',img:'',name:'Mag-Go Tote',desc:'Totebag eksklusif Mag-Go dari bahan daur ulang berkualitas tinggi.',pts:750,claimed:false},
+];
+// muat foto yang sudah pernah diupload sebelumnya (tersimpan di browser)
+try {
+  const savedImgs = JSON.parse(localStorage.getItem('magGoRewardImgs') || '{}');
+  rewardData.forEach((r,i) => { if (savedImgs[i]) r.img = savedImgs[i]; });
+} catch(e) {}
+
+function saveRewardImg(i, dataUrl) {
+  rewardData[i].img = dataUrl;
+  try {
+    const savedImgs = JSON.parse(localStorage.getItem('magGoRewardImgs') || '{}');
+    savedImgs[i] = dataUrl;
+    localStorage.setItem('magGoRewardImgs', JSON.stringify(savedImgs));
+  } catch(e) {}
+  renderRewards();
+}
+
+function onRewardImgPick(i, inputEl) {
+  const file = inputEl.files && inputEl.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => saveRewardImg(i, e.target.result);
+  reader.readAsDataURL(file);
+}
+
+function renderRewards() {
+  const g = document.getElementById('rewards-grid');
+  g.innerHTML = rewardData.map((r,i) => {
+    const canRedeem = !r.claimed && points >= r.pts;
+    const needMore = r.pts - points;
+    return `<div class="reward-card group bg-surface border border-outline-variant rounded-[24px] p-md ${canRedeem?'hover:border-primary':''}">
+      <label class="aspect-square bg-surface-container-low rounded-[16px] mb-md overflow-hidden relative block cursor-pointer" title="Klik untuk upload/ganti foto">
+        <input type="file" accept="image/*" class="hidden" onchange="onRewardImgPick(${i}, this)"/>
+        ${r.img
+          ? `<img class="reward-icon w-full h-full object-cover transition-transform duration-500" src="${r.img}" alt="${r.name}"/>`
+          : `<div class="w-full h-full flex flex-col items-center justify-center gap-xs bg-gradient-to-br from-tertiary/20 to-secondary/20 text-on-surface-variant">
+              <span class="text-5xl">${r.icon}</span>
+              <span class="font-label-sm text-xs flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">add_a_photo</span> Upload foto</span>
+            </div>`
+        }
+        <div class="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors opacity-0 group-hover:opacity-100">
+          <span class="material-symbols-outlined text-white text-[28px]">add_a_photo</span>
+        </div>
+        <div class="absolute top-sm right-sm ${r.claimed?'bg-surface-container-high text-on-surface-variant':canRedeem?'bg-primary/90 text-on-primary':'bg-tertiary text-on-tertiary'} px-sm py-xs rounded-full font-label-sm backdrop-blur-sm">
+          ${r.pts} pts
+        </div>
+      </label>
+      <h3 class="font-title-lg mb-xs">${r.name}</h3>
+      <p class="font-body-md text-on-surface-variant text-sm mb-md">${r.desc}</p>
+      ${r.claimed
+        ? `<button class="w-full py-base bg-surface-container-high rounded-xl font-label-md text-on-surface-variant cursor-not-allowed flex items-center justify-center gap-xs"><span class="material-symbols-outlined text-[16px]" style="font-variation-settings:'FILL' 1;">check_circle</span> Claimed</button>`
+        : canRedeem
+          ? `<button class="w-full py-base bg-primary text-on-primary rounded-xl font-label-md shadow-sm hover:scale-95 transition-transform flex items-center justify-center gap-xs" onclick="redeemReward(${i})"><span class="material-symbols-outlined text-[16px]" style="font-variation-settings:'FILL' 1;">redeem</span> Tukar Sekarang!</button>`
+          : `<button class="w-full py-base bg-surface-container-high text-on-surface-variant rounded-xl font-label-md cursor-default">${needMore > 0 ? `Butuh +${needMore} poin lagi` : 'Earn Points'}</button>`
+      }
+    </div>`;
+  }).join('');
+}
+function redeemReward(i) {
+  if (points < rewardData[i].pts) return;
+  points -= rewardData[i].pts; rewardData[i].claimed = true;
+  updateUI(); showToast(`🎁 ${rewardData[i].name} berhasil ditukar!`);
+}
+renderRewards();
+
+// ─── VIDEOS — bersih tanpa badge poin ───
+const videos = [
+  {id:'hVez6DBZ1p4',tag:'🏡 Budidaya Rumahan',title:'Cara Budidaya Maggot BSF Skala Rumahan untuk Pemula Tanpa Bau',dur:'12 menit'},
+  {id:'BMPbfO5Y78Y',tag:'💰 Bisnis Maggot',title:'Analisa Biaya & Omset Usaha Budidaya Maggot BSF Pemula',dur:'10 menit'},
+  {id:'97DVnqS4ZjY',tag:'🔬 Pengolahan',title:'Tutorial Pengeringan Maggot BSF untuk Pakan Ternak Berkualitas',dur:'7 menit'},
+  {id:'5WrFZC5wU2M',tag:'🥬 Pakan Maggot',title:'Fermentasi Sayuran Limbah Pasar untuk Pakan Maggot BSF',dur:'9 menit'},
+  {id:'akvInF0_4W0',tag:'⚠️ Tips & Risiko',title:'Risiko Terbesar Budidaya Maggot BSF bagi Pemula',dur:'11 menit'},
+  {id:'O91bZVUGkK4',tag:'🌿 Profil BSF',title:'Profil Maggot BSF Sleman: Edukasi & Produk Maggot Lengkap',dur:'8 menit'},
+];
+const watchedVids = new Set();
+function renderVideos() {
+  const g = document.getElementById('video-grid');
+  g.innerHTML = videos.map((v,i) => `
+    <div class="vid-card bg-surface-container-lowest rounded-[20px] overflow-hidden border border-outline-variant shadow-sm">
+      <div class="video-thumb-wrap aspect-video relative cursor-pointer" onclick="loadVid('vf${i}','vt${i}','vp${i}','${v.id}',${i})">
+        <img id="vt${i}" src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${v.title}" class="w-full h-full object-cover"/>
+        <div class="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/10 transition-colors" id="vp${i}">
+          <div class="play-ring">
+            <span class="material-symbols-outlined text-on-primary text-[24px] ml-0.5" style="font-variation-settings:'FILL' 1;">play_arrow</span>
+          </div>
+        </div>
+        <iframe id="vf${i}" class="absolute inset-0 w-full h-full hidden" allowfullscreen allow="autoplay"></iframe>
+        ${watchedVids.has(i)?'<div class="absolute top-2 left-2 bg-primary/90 text-on-primary px-sm py-xs rounded-full font-label-sm text-[10px]">✓ Ditonton</div>':''}
+      </div>
+      <div class="p-md">
+        <span class="inline-block bg-primary-fixed text-primary font-label-sm rounded-full px-sm py-xs mb-sm">${v.tag}</span>
+        <p class="font-label-md text-on-surface leading-snug mb-sm line-clamp-2">${v.title}</p>
+        <div class="flex items-center">
+          <span class="font-label-sm text-on-surface-variant">⏱ ${v.dur}</span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function loadVid(frameId, thumbId, playId, videoId, idx) {
+  document.getElementById(frameId).src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+  document.getElementById(frameId).classList.remove('hidden');
+  document.getElementById(playId).classList.add('hidden');
+  if (!watchedVids.has(idx)) {
+    watchedVids.add(idx); points += 15; xp += 20; updateUI();
+    showToast('📺 Video sedang diputar!');
+  }
+}
+function loadFeatured() {
+  document.getElementById('featured-frame').src = 'https://www.youtube.com/embed/n3aFWqeRbSU?autoplay=1&rel=0';
+  document.getElementById('featured-frame').classList.remove('hidden');
+  document.getElementById('featured-play').classList.add('hidden');
+  if (!watchedVids.has(99)) {
+    watchedVids.add(99); points += 15; xp += 20; updateUI();
+    showToast('📺 Video unggulan diputar!');
+  }
+}
+renderVideos();
+updateUI();
+</script>
+
+<!-- BOTTOM NAV (Mobile) -->
+<style>
+@media(max-width:768px){ .mag-bottom-nav{display:flex !important;} body{padding-bottom:80px;} }
+.mag-bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-top:1px solid #d4e8db;padding:8px 0 calc(8px + env(safe-area-inset-bottom));z-index:200;box-shadow:0 -4px 16px rgba(10,46,30,.08);}
+.mag-bnav-inner{display:flex;justify-content:space-around;}
+.mag-bnav-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 12px;border-radius:12px;text-decoration:none;}
+.mag-bnav-item .mi{font-family:'Material Symbols Rounded';font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;font-size:24px;color:#6b8f7a;}
+.mag-bnav-item span:last-child{font-size:10px;font-weight:600;color:#6b8f7a;}
+.mag-bnav-item.active .mi{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#1a6b40;}
+.mag-bnav-item.active span:last-child{color:#1a6b40;}
+</style>
+<nav class="mag-bottom-nav">
+  <div class="mag-bnav-inner">
+    <a href="Home.html" class="mag-bnav-item"><span class="mi">home</span><span>Home</span></a>
+    <a href="Penjemputan.html" class="mag-bnav-item"><span class="mi">local_shipping</span><span>Go Pick-Up</span></a>
+    <a href="marketplace.html" class="mag-bnav-item"><span class="mi">storefront</span><span>Go Marketplace</span></a>
+    <a href="Game.html" class="mag-bnav-item active"><span class="mi">sports_esports</span><span>Maggotku</span></a>
+    <a href="Berlangganan.html" class="mag-bnav-item"><span class="mi">workspace_premium</span><span>Go Langganan</span></a>
+  </div>
+</nav>
+</body>
+</html>

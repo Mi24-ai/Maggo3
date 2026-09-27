@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MAG-GO — Penjemputan Limbah</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<style>
+:root{--g950:#0a2e1e;--g900:#0f3d28;--g800:#145232;--g700:#1a6b40;--g600:#1e844d;--g500:#259c5a;--g400:#34b86a;--g300:#5fd08a;--g200:#9ae6b0;--g100:#c6f2d4;--g50:#eefaf2;--amber:#f59e0b;--bg:#f6faf7;--surf:#fff;--surf2:#f0f7f3;--txt:#0a2e1e;--txt2:#3a5f4a;--muted:#6b8f7a;--bdr:#d4e8db;--rsm:12px;--rmd:20px;--rlg:28px;--rxl:40px;--sdw:0 4px 16px rgba(10,46,30,.08);--sdwm:0 8px 32px rgba(10,46,30,.12);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;}
+.msym{font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;display:inline-block;line-height:1;white-space:nowrap;vertical-align:middle;-webkit-font-smoothing:antialiased;}
+.navbar{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr);padding:12px 0;box-shadow:0 2px 12px rgba(10,46,30,.06);}
+.navbar-inner{max-width:1280px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.brand-logo{width:44px;height:44px;border-radius:14px;overflow:hidden;box-shadow:var(--sdw);}
+.brand-logo img{width:100%;height:100%;object-fit:cover;}
+.brand-name{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--g900);letter-spacing:-.5px;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:50px;font-size:14px;font-weight:600;color:var(--txt2);text-decoration:none;transition:all .2s;}
+.nav-link:hover{background:var(--g50);color:var(--g700);}
+.nav-link.active{background:var(--g900);color:white;}
+.nav-link .msym{font-size:18px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
+.nav-actions{display:flex;align-items:center;gap:10px;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;border:none;transition:all .2s;text-decoration:none;font-family:inherit;}
+.btn-primary{background:var(--g900);color:white;box-shadow:0 4px 16px rgba(10,46,30,.25);}
+.btn-primary:hover{background:var(--g700);transform:translateY(-1px);}
+.btn-outline{background:transparent;color:var(--g900);border:2px solid var(--bdr);}
+.btn-outline:hover{border-color:var(--g400);background:var(--g50);}
+.btn-green{background:var(--g400);color:var(--g950);font-weight:700;padding:14px 28px;border-radius:50px;font-size:15px;box-shadow:0 4px 20px rgba(52,184,106,.35);transition:all .2s;cursor:pointer;border:none;font-family:inherit;display:inline-flex;align-items:center;gap:8px;}
+.btn-green:hover{background:var(--g300);transform:translateY(-2px);box-shadow:0 8px 28px rgba(52,184,106,.4);}
+
+/* ─── PAGE HERO ─── */
+.page-hero{background:linear-gradient(135deg,var(--g950) 0%,var(--g700) 100%);padding:64px 32px 80px;position:relative;overflow:hidden;}
+.page-hero::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none;}
+.page-hero-inner{max-width:1280px;margin:0 auto;position:relative;z-index:2;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(52,184,106,.2);border:1px solid rgba(52,184,106,.3);color:var(--g200);padding:8px 16px;border-radius:50px;font-size:13px;font-weight:600;margin-bottom:20px;}
+.page-hero h1{font-family:'Syne',sans-serif;font-size:48px;font-weight:800;color:white;line-height:1.1;letter-spacing:-1.2px;margin-bottom:16px;}
+.page-hero h1 span{color:var(--g300);}
+.page-hero p{font-size:18px;color:rgba(255,255,255,.7);max-width:520px;line-height:1.7;}
+
+/* ─── MAIN CONTENT ─── */
+.main{max-width:1280px;margin:0 auto;padding:48px 32px;}
+.content-grid{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:start;}
+
+/* ─── FORM CARD ─── */
+.card{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rlg);padding:32px;box-shadow:var(--sdw);}
+.card-header{margin-bottom:28px;}
+.card-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--g950);margin-bottom:6px;}
+.card-subtitle{font-size:14px;color:var(--muted);}
+.form-section{margin-bottom:28px;}
+.form-section-label{font-size:12px;font-weight:700;color:var(--g700);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.form-section-label::after{content:'';flex:1;height:1px;background:var(--bdr);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-group{margin-bottom:16px;}
+.label{display:block;font-size:13px;font-weight:600;color:var(--txt2);margin-bottom:8px;}
+.input,.select,.textarea{width:100%;padding:12px 16px;border:1.5px solid var(--bdr);border-radius:var(--rsm);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;color:var(--txt);background:var(--bg);transition:all .2s;outline:none;}
+.input:focus,.select:focus,.textarea:focus{border-color:var(--g400);background:white;box-shadow:0 0 0 4px rgba(52,184,106,.1);}
+.textarea{min-height:100px;resize:vertical;line-height:1.5;}
+.select{cursor:pointer;}
+.input-icon-wrap{position:relative;}
+.input-icon-wrap .msym{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:20px;pointer-events:none;}
+.input-icon-wrap .input{padding-left:46px;}
+
+/* ─── WASTE TYPE PICKER ─── */
+.waste-types{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.waste-chip{padding:12px 8px;border:2px solid var(--bdr);border-radius:14px;text-align:center;cursor:pointer;transition:all .2s;font-size:12px;font-weight:600;color:var(--txt2);background:var(--bg);}
+.waste-chip:hover{border-color:var(--g300);background:var(--g50);}
+.waste-chip.selected{border-color:var(--g600);background:var(--g50);color:var(--g700);}
+.waste-chip .wc-icon{font-size:24px;display:block;margin-bottom:4px;}
+.waste-chip{
+    padding:12px 8px;
+    border:2px solid var(--bdr);
+    border-radius:14px;
+    text-align:center;
+    cursor:pointer;
+    transition:all .2s;
+    font-size:12px;
+    font-weight:600;
+    color:var(--txt2);
+    background:var(--bg);
+    display:block;
+}
+
+.waste-chip input{
+    display:none;
+}
+
+.waste-chip:has(input:checked){
+    border-color:var(--g600);
+    background:var(--g50);
+    color:var(--g700);
+}
+
+/* ─── SCHEDULE TOGGLE ─── */
+.sched-tabs{display:flex;background:var(--surf2);border-radius:var(--rsm);padding:4px;gap:4px;margin-bottom:20px;}
+.sched-tab{flex:1;padding:10px;text-align:center;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--muted);border:none;background:none;font-family:inherit;}
+.sched-tab.active{background:white;color:var(--g700);box-shadow:var(--sdw);}
+
+/* ─── STATUS PANEL ─── */
+.status-panel{display:flex;flex-direction:column;gap:20px;}
+.status-card{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rlg);padding:28px;box-shadow:var(--sdw);}
+.live-map{background:linear-gradient(135deg,var(--g950),var(--g700));border-radius:20px;height:200px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:20px;}
+.map-pulse{position:absolute;width:20px;height:20px;background:var(--g400);border-radius:50%;animation:pulse-ring 2s ease infinite;}
+@keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(52,184,106,.6)} 70%{box-shadow:0 0 0 20px rgba(52,184,106,0)} 100%{box-shadow:0 0 0 0 rgba(52,184,106,0)}}
+.map-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:32px 32px;}
+.map-vehicle{position:absolute;font-size:28px;animation:vehicle-move 4s ease-in-out infinite;}
+@keyframes vehicle-move{0%{transform:translate(-30px,10px)} 50%{transform:translate(30px,-10px)} 100%{transform:translate(-30px,10px)}}
+.status-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--bdr);}
+.status-row:last-child{border-bottom:none;padding-bottom:0;}
+.status-label{font-size:13px;color:var(--muted);}
+.status-value{font-size:14px;font-weight:700;color:var(--txt);}
+.status-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:50px;font-size:12px;font-weight:700;}
+.badge-green{background:var(--g50);color:var(--g700);border:1px solid var(--g100);}
+.badge-amber{background:var(--amber-100,#fef3c7);color:#92400e;border:1px solid #fde68a;}
+.badge-blue{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;}
+
+/* ─── HISTORY TABLE ─── */
+.history-list{display:flex;flex-direction:column;gap:12px;}
+.history-item{display:flex;align-items:center;gap:16px;padding:16px;background:var(--bg);border-radius:14px;border:1px solid var(--bdr);transition:all .2s;}
+.history-item:hover{background:var(--g50);border-color:var(--g100);}
+.history-icon{width:44px;height:44px;border-radius:12px;background:var(--g50);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.history-icon .msym{color:var(--g700);font-size:22px;}
+.history-info{flex:1;}
+.history-title{font-size:14px;font-weight:700;color:var(--txt);margin-bottom:2px;}
+.history-meta{font-size:12px;color:var(--muted);}
+.history-weight{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--g700);}
+.history-pts{font-size:11px;color:var(--muted);text-align:right;}
+
+/* ─── FOOTER ─── */
+.footer{background:var(--g950);padding:56px 32px 32px;margin-top:80px;}
+.footer-inner{max-width:1280px;margin:0 auto;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px;}
+.footer-brand p{color:rgba(255,255,255,.5);font-size:14px;margin-top:12px;line-height:1.7;max-width:260px;}
+.footer-heading{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:white;margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.footer-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:14px;transition:color .2s;}
+.footer-links a:hover{color:var(--g300);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;display:flex;justify-content:space-between;align-items:center;}
+.footer-copy{font-size:13px;color:rgba(255,255,255,.4);}
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-top:1px solid var(--bdr);padding:8px 0 calc(8px + env(safe-area-inset-bottom));z-index:100;box-shadow:0 -8px 32px rgba(10,46,30,.08);}
+.bottom-nav-inner{display:flex;justify-content:space-around;}
+.bottom-nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 12px;border-radius:12px;text-decoration:none;}
+.bottom-nav-item span:first-child{font-size:24px;color:var(--muted);}
+.bottom-nav-item span:last-child{font-size:10px;font-weight:600;color:var(--muted);}
+.bottom-nav-item.active span{color:var(--g700) !important;}
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .bottom-nav{display:block;}
+  .page-hero{padding:48px 20px 64px;}
+  .page-hero h1{font-size:34px;}
+  .main{padding:32px 20px;}
+  .content-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .waste-types{grid-template-columns:repeat(3,1fr);}
+  .footer-top{grid-template-columns:1fr 1fr;gap:28px;}
+  .footer-bottom{flex-direction:column;gap:10px;text-align:center;}
+  body{padding-bottom:80px;}
+}
+
+/* ─── USER TYPE SELECTOR ─── */
+.user-type-selector{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;}
+.user-type-option{border:2px solid var(--bdr);border-radius:18px;padding:16px;text-align:center;cursor:pointer;transition:all .25s;background:var(--bg);}
+.user-type-option:hover{border-color:var(--g300);background:var(--g50);}
+.user-type-option.active{border-color:var(--g700);background:var(--g50);box-shadow:0 0 0 3px rgba(26,107,64,.1);}
+.uto-icon{font-size:28px;margin-bottom:6px;}
+.uto-label{font-size:14px;font-weight:800;color:var(--g950);}
+.uto-desc{font-size:12px;color:var(--muted);margin-top:3px;}
+
+/* ─── INFO BANNER ─── */
+.info-banner{display:flex;align-items:flex-start;gap:12px;padding:16px;border-radius:16px;font-size:13px;line-height:1.6;margin-bottom:20px;}
+.info-banner-rt{background:#fff7ed;border:1px solid #fed7aa;color:#92400e;}
+.info-banner-rt .msym{color:#d97706;}
+.info-banner-biz{background:var(--g50);border:1px solid var(--g100);color:var(--g800);}
+.info-banner-biz .msym{color:var(--g600);}
+
+/* ─── PHOTO UPLOAD ─── */
+.photo-guide-card{background:var(--surf2);border:1px solid var(--bdr);border-radius:14px;padding:16px;margin-bottom:16px;}
+.photo-guide-biz{background:#eff6ff;border-color:#bfdbfe;}
+.pgc-step{display:flex;align-items:center;gap:12px;padding:8px 0;font-size:13px;color:var(--txt2);}
+.pgc-step:not(:last-child){border-bottom:1px dashed var(--bdr);}
+.pgc-num{width:28px;height:28px;border-radius:50%;background:var(--g700);color:white;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.photo-guide-biz .pgc-num{background:#1d4ed8;font-size:14px;}
+
+.photo-upload-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px;}
+.photo-upload-slot{border:2px dashed var(--bdr);border-radius:16px;aspect-ratio:1;cursor:pointer;overflow:hidden;position:relative;background:var(--bg);transition:all .2s;}
+.photo-upload-slot:hover{border-color:var(--g400);background:var(--g50);}
+.pus-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:12px;}
+.pus-preview{position:relative;width:100%;height:100%;}
+.pus-preview img{width:100%;height:100%;object-fit:cover;}
+.pus-remove{position:absolute;top:4px;right:4px;background:rgba(220,38,38,.85);color:white;border:none;border-radius:50%;width:24px;height:24px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.pus-label{position:absolute;bottom:0;left:0;right:0;background:rgba(26,107,64,.85);color:white;font-size:10px;font-weight:700;text-align:center;padding:4px;}
+.photo-upload-slot.has-photo{border-color:var(--g400);border-style:solid;}
+
+.photo-status{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);background:var(--surf2);padding:10px 14px;border-radius:10px;}
+.photo-status.ok{color:var(--g700);background:var(--g50);}
+
+/* ─── RADIO CARDS ─── */
+.radio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.biz-ready-grid{grid-template-columns:repeat(2,1fr);}
+.radio-card{border:2px solid var(--bdr);border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;transition:all .2s;background:var(--bg);}
+.radio-card:hover{border-color:var(--g300);background:var(--g50);}
+.radio-card input{display:none;}
+.radio-card.selected{border-color:var(--g700);background:var(--g50);}
+.rc-icon{font-size:22px;}
+.rc-label{font-size:12px;font-weight:700;color:var(--txt2);}
+
+@media(max-width:768px){
+  .photo-upload-grid{grid-template-columns:repeat(3,1fr);gap:8px;}
+  .radio-grid{grid-template-columns:1fr 1fr 1fr;}
+  .user-type-selector{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="navbar-inner">
+    <a href="Home.html" class="brand">
+      <div class="brand-logo"><img src="foto/MAG-Go.PNG" alt="MAG-GO"/></div>
+      <span class="brand-name">Mag-Go</span>
+    </a>
+    <nav class="nav-links">
+      <a href="Home.html" class="nav-link"><span class="msym" style="font-variation-settings:'FILL' 0">home</span>Home</a>
+      <a href="Penjemputan.html" class="nav-link active"><span class="msym">local_shipping</span>Go Pick-Up</a>
+      <a href="marketplace.html" class="nav-link"><span class="msym" style="font-variation-settings:'FILL' 0">storefront</span>Go Marketplace</a>
+      <a href="Game.html" class="nav-link"><span class="msym" style="font-variation-settings:'FILL' 0">sports_esports</span>Maggotku</a>
+      <a href="leaderboard.html" class="nav-link"><span class="msym" style="font-variation-settings:'FILL' 0">leaderboard</span>Go Leaderboard</a>
+      <a href="Berlangganan.html" class="nav-link"><span class="msym" style="font-variation-settings:'FILL' 0">workspace_premium</span>Go Langganan</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="hero-badge"><span class="msym" style="font-size:16px">electric_moped</span>Armada Motor Listrik Ramah Lingkungan</div>
+    <h1>Panggil <span>Armada Penjemputan</span><br/>Food Waste Anda</h1>
+    <p>Layanan on-demand dan terjadwal untuk penjemputan limbah makanan. Isi form di bawah maka armada kami akan tiba dalam 30–60 menit.</p>
+  </div>
+</section>
+
+<main class="main">
+  <div class="content-grid">
+    <!-- FORM SIDE -->
+    <div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Form Permintaan Penjemputan</div>
+          <div class="card-subtitle">Pilih tipe pengguna untuk form yang sesuai dengan kebutuhan Anda.</div>
+        </div>
+
+        <!-- USER TYPE SELECTOR -->
+        <div class="user-type-selector">
+          <div class="user-type-option active" id="type-rt" onclick="switchUserType('rt')">
+            <div class="uto-icon">🏠</div>
+            <div class="uto-label">Rumah Tangga</div>
+            <div class="uto-desc">Dikumpulkan ke Ketua RT</div>
+          </div>
+          <div class="user-type-option" id="type-biz" onclick="switchUserType('biz')">
+            <div class="uto-icon">🍽️</div>
+            <div class="uto-label">SPPG / Katering / Hotel</div>
+            <div class="uto-desc">Penjemputan langsung</div>
+          </div>
+          <div class="user-type-option" id="type-pasar" onclick="switchUserType('pasar')">
+        <div class="uto-icon">🏘️</div>
+        <div class="uto-label">Ketua RT</div>
+        <div class="uto-desc">Ketua RT yang manggil armada</div>
+         </div>
+        </div>
+
+        <!-- INFO BANNER RT -->
+        <div class="info-banner info-banner-rt" id="banner-rt">
+          <span class="msym" style="font-size:20px;flex-shrink:0;">info</span>
+          <div>
+            <strong>Alur Penjemputan Rumah Tangga</strong><br/>
+            Sampahmu akan dikumpulkan terlebih dahulu ke <strong>Ketua RT</strong> sebelum dijemput oleh Go Pick-Up. Upload foto sampah sebagai bukti kontribusimu untuk pendataan.
+          </div>
+        </div>
+
+        <!-- INFO BANNER BIZ -->
+        <div class="info-banner info-banner-biz" id="banner-biz" style="display:none;">
+          <span class="msym" style="font-size:20px;flex-shrink:0;">local_shipping</span>
+          <div>
+            <strong>Penjemputan Langsung ke Lokasi</strong><br/>
+            Armada Go Pick-Up akan langsung datang ke lokasi usahamu. Upload foto sampah untuk verifikasi volume dan kualitas sebelum penjemputan.
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-label"><span class="msym" style="font-size:16px;color:var(--g700)">location_on</span>Lokasi Penjemputan</div>
+          <!-- RT SPECIFIC: Nama & RT Info -->
+          <div class="form-group" id="field-nama-rt">
+            <label class="label">Nama Kepala Keluarga *</label>
+            <input type="text" class="input" id="inp-nama-rt" placeholder="cth. Bapak/Ibu Suharto"/>
+          </div>
+          <div class="form-group" id="field-nama-biz" style="display:none;">
+            <label class="label">Nama Usaha / Instansi *</label>
+            <input type="text" class="input" id="inp-nama-biz" placeholder="cth. Katering Bu Sari / SPPG 04 Jakarta / Hotel Melati"/>
+          </div>
+          <div class="form-group">
+            <label class="label">Alamat Lengkap</label>
+            <input type="text" class="input" placeholder="Jl. Contoh No. 12, Kelurahan, Kecamatan"/>
+          </div>
+          <!-- RT: RT/RW Info -->
+          <div id="rt-info-section">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="label">No. RT *</label>
+                <input type="text" class="input" id="inp-rt" placeholder="cth. RT 005"/>
+              </div>
+              <div class="form-group">
+                <label class="label">No. RW *</label>
+                <input type="text" class="input" id="inp-rw" placeholder="cth. RW 012"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="label">Nama Ketua RT *</label>
+              <input type="text" class="input" id="inp-ketua-rt" placeholder="cth. Bapak Wahyudi"/>
+            </div>
+            <div class="form-group">
+              <label class="label">No. HP Ketua RT</label>
+              <input type="tel" class="input" id="inp-hp-ketua" placeholder="08xx-xxxx-xxxx (opsional)"/>
+            </div>
+          </div>
+
+          <!-- BIZ: PIC Info -->
+          <div id="biz-pic-section" style="display:none;">
+            <div class="form-group">
+              <label class="label">Nama PIC / Penanggung Jawab *</label>
+              <input type="text" class="input" id="inp-pic" placeholder="cth. Ibu Ratna (Manajer Operasional)"/>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="label">Kota / Kabupaten</label>
+              <select class="select">
+                <option value="">Pilih kota...</option>
+                <option>Surakarta</option><option>Sragen</option><option>Boyolali</option>
+                <option>Karanganyar</option><option>Klaten</option><option>Sukoharjo</option><option>Wonogiri</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="label">No. Telepon</label>
+              <input type="tel" class="input" placeholder="08xx-xxxx-xxxx"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="label">Catatan Lokasi (opsional)</label>
+            <input type="text" class="input" placeholder="cth. Pintu belakang, setelah pos satpam kanan"/>
+          </div>
+        </div>
+
+        <!-- ═══════════ FOTO KONFIRMASI ═══════════ -->
+        <div class="form-section">
+          <div class="form-section-label"><span class="msym" style="font-size:16px;color:var(--g700)">photo_camera</span>Foto Konfirmasi Sampah</div>
+
+          <div class="photo-confirm-wrap" id="photo-rt-guide">
+            <div class="photo-guide-card">
+              <div class="pgc-step">
+                <div class="pgc-num">1</div>
+                <div>Kumpulkan sampah organik di wadah/kantong terpisah</div>
+              </div>
+              <div class="pgc-step">
+                <div class="pgc-num">2</div>
+                <div>Antarkan ke titik kumpul <strong>Ketua RT</strong></div>
+              </div>
+              <div class="pgc-step">
+                <div class="pgc-num">3</div>
+                <div>Foto sampah di titik kumpul sebagai <strong>bukti kontribusi</strong></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="photo-confirm-wrap" id="photo-biz-guide" style="display:none;">
+            <div class="photo-guide-card photo-guide-biz">
+              <div class="pgc-step">
+                <div class="pgc-num">📸</div>
+                <div>Foto sampah yang sudah dikemas/ditimbang sebelum dijemput</div>
+              </div>
+              <div class="pgc-step">
+                <div class="pgc-num">📦</div>
+                <div>Pastikan terlihat jelas kondisi, volume, dan jenis sampah</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- UPLOAD AREA -->
+          <div class="photo-upload-grid">
+            <div class="photo-upload-slot" id="slot-1" onclick="triggerUpload(1)">
+              <input type="file" id="file-1" accept="image/*" capture="environment" style="display:none;" onchange="previewPhoto(this,1)"/>
+              <div class="pus-empty" id="pus-empty-1">
+                <span class="msym" style="font-size:36px;color:var(--muted);">add_a_photo</span>
+                <div style="font-size:12px;font-weight:600;color:var(--muted);margin-top:8px;">Foto Utama</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:2px;">Klik / Kamera</div>
+              </div>
+              <div class="pus-preview" id="pus-preview-1" style="display:none;">
+                <img id="pus-img-1" src="" alt="foto 1"/>
+                <button class="pus-remove" onclick="removePhoto(event,1)">✕</button>
+                <div class="pus-label">Foto 1 ✓</div>
+              </div>
+            </div>
+
+            <div class="photo-upload-slot" id="slot-2" onclick="triggerUpload(2)">
+              <input type="file" id="file-2" accept="image/*" capture="environment" style="display:none;" onchange="previewPhoto(this,2)"/>
+              <div class="pus-empty" id="pus-empty-2">
+                <span class="msym" style="font-size:36px;color:var(--muted);">add_a_photo</span>
+                <div style="font-size:12px;font-weight:600;color:var(--muted);margin-top:8px;">Foto Tambahan</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:2px;">Opsional</div>
+              </div>
+              <div class="pus-preview" id="pus-preview-2" style="display:none;">
+                <img id="pus-img-2" src="" alt="foto 2"/>
+                <button class="pus-remove" onclick="removePhoto(event,2)">✕</button>
+                <div class="pus-label">Foto 2 ✓</div>
+              </div>
+            </div>
+
+            <div class="photo-upload-slot" id="slot-3" onclick="triggerUpload(3)">
+              <input type="file" id="file-3" accept="image/*" capture="environment" style="display:none;" onchange="previewPhoto(this,3)"/>
+              <div class="pus-empty" id="pus-empty-3">
+                <span class="msym" style="font-size:36px;color:var(--muted);">add_a_photo</span>
+                <div style="font-size:12px;font-weight:600;color:var(--muted);margin-top:8px;">Foto Timbangan</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:2px;">Opsional</div>
+              </div>
+              <div class="pus-preview" id="pus-preview-3" style="display:none;">
+                <img id="pus-img-3" src="" alt="foto 3"/>
+                <button class="pus-remove" onclick="removePhoto(event,3)">✕</button>
+                <div class="pus-label">Foto 3 ✓</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="photo-status" id="photo-status">
+            <span class="msym" style="font-size:16px;color:var(--muted);">photo_library</span>
+            <span id="photo-count-text">Belum ada foto, minimal 1 foto wajib diupload</span>
+          </div>
+
+          <!-- RT: Status titik kumpul -->
+          <div id="rt-collection-status" style="margin-top:16px;">
+            <label class="label">Status Pengiriman ke Ketua RT *</label>
+            <div class="radio-grid">
+              <label class="radio-card" onclick="selectRTStatus(this,'sudah')">
+                <input type="radio" name="rt-status" value="sudah"/>
+                <span class="rc-icon">✅</span>
+                <span class="rc-label">Sudah diantar ke Ketua RT</span>
+              </label>
+              <label class="radio-card" onclick="selectRTStatus(this,'belum')">
+                <input type="radio" name="rt-status" value="belum"/>
+                <span class="rc-icon">🕐</span>
+                <span class="rc-label">Belum — akan antar besok</span>
+              </label>
+              <label class="radio-card" onclick="selectRTStatus(this,'titip')">
+                <input type="radio" name="rt-status" value="titip"/>
+                <span class="rc-icon">🤝</span>
+                <span class="rc-label">Dititipkan tetangga</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- BIZ: Verifikasi volume -->
+          <div id="biz-volume-verify" style="display:none;margin-top:16px;">
+            <label class="label">Apakah sampah sudah ditimbang / dikemas?</label>
+            <div class="radio-grid biz-ready-grid">
+              <label class="radio-card" onclick="selectBizStatus(this,'siap')">
+                <input type="radio" name="biz-status" value="siap"/>
+                <span class="rc-icon">✅</span>
+                <span class="rc-label">Sudah siap dijemput</span>
+              </label>
+              <label class="radio-card" onclick="selectBizStatus(this,'proses')">
+                <input type="radio" name="biz-status" value="proses"/>
+                <span class="rc-icon">⚙️</span>
+                <span class="rc-label">Sedang dikemas</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-label"><span class="msym" style="font-size:16px;color:var(--g700)">recycling</span>Jenis & Volume Limbah</div>
+          <div class="form-group">
+            <label class="label">Jenis Limbah Makanan</label>
+            <div class="waste-types">
+              <label class="waste-chip">
+    <input type="checkbox" hidden>
+    <span class="wc-icon">🥬</span>
+    Sayuran & Buah
+  </label>
+
+  <label class="waste-chip">
+    <input type="checkbox" hidden>
+    <span class="wc-icon">🍚</span>
+    Nasi & Sereal
+  </label>
+
+  <label class="waste-chip">
+    <input type="checkbox" hidden>
+    <span class="wc-icon">🍖</span>
+    Daging & Ikan
+  </label>
+   <label class="waste-chip">
+    <input type="checkbox" hidden>
+    <span class="wc-icon">🍞</span>
+    Roti & bakery
+  </label>
+
+  <label class="waste-chip">
+    <input type="checkbox" hidden>
+    <span class="wc-icon">☕</span>
+    Ampas kopi
+  </label>
+
+  <label class="waste-chip">
+    <input type="checkbox" hidden>
+    <span class="wc-icon">🥡</span>
+    Sisa Masakan
+  </label>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="label">Jenis yang dikumpulkan</label>
+              <input type="number" class="input" placeholder="cth. 2" min="1" oninput="updateEstimate(this.value)"/>
+            </div>
+            <div class="form-group">
+              <label class="label">Frekuensi Penghasil</label>
+              <select class="select">
+                <option>Harian</option><option>2–3x seminggu</option><option>Mingguan</option><option>Bulanan</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="label">Deskripsi Tambahan (opsional)</label>
+            <textarea class="textarea" placeholder="Informasi tambahan tentang kondisi atau kemasan limbah..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-label"><span class="msym" style="font-size:16px;color:var(--g700)">schedule</span>Waktu Penjemputan</div>
+          <div class="sched-tabs">
+            <button class="sched-tab active" onclick="switchTab('now',this)">⚡ Sekarang (On-demand)</button>
+            <button class="sched-tab" onclick="switchTab('schedule',this)">📅 Jadwalkan</button>
+          </div>
+          <div id="tab-now">
+            <div style="background:var(--g50);border:1px solid var(--g100);border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;">
+              <span style="font-size:28px;">🛵</span>
+              <div>
+                <div style="font-weight:700;font-size:15px;color:var(--g800);">Armada tersedia sekarang!</div>
+                <div style="font-size:13px;color:var(--muted);">Estimasi tiba: <strong>25–40 menit</strong> dari sekarang.</div>
+              </div>
+            </div>
+          </div>
+          <div id="tab-schedule" style="display:none;">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="label">Tanggal</label>
+                <input type="date" class="input"/>
+              </div>
+              <div class="form-group">
+                <label class="label">Jam Penjemputan</label>
+                <select class="select">
+                  <option>07:00 – 09:00</option><option>09:00 – 11:00</option>
+                  <option>11:00 – 13:00</option><option>14:00 – 16:00</option><option>16:00 – 18:00</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="price-estimate" style="background:linear-gradient(135deg,var(--g50),#e8f8ee);border:1px solid var(--g100);border-radius:16px;padding:20px;margin-bottom:24px;display:none;">
+          <div style="font-size:13px;font-weight:700;color:var(--g700);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;">💰 Estimasi Biaya</div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;">
+            <span style="color:var(--muted);">Biaya layanan</span><span style="font-weight:600;" id="est-service">Rp 10.000</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;">
+            <span style="color:var(--muted);">Per kg limbah</span><span style="font-weight:600;" id="est-pkg">—</span>
+          </div>
+          <div style="border-top:1px solid var(--g100);padding-top:12px;display:flex;justify-content:space-between;font-size:16px;">
+            <span style="font-weight:700;color:var(--g700);">Total Estimasi</span><span style="font-weight:800;color:var(--g700);font-family:'Syne',sans-serif;" id="est-total">—</span>
+        </div>
+
+        <button class="btn-green" style="width:100%;justify-content:center;font-size:16px;" onclick="submitPickup()">
+          <span class="msym">local_shipping</span>
+          Konfirmasi Penjemputan
+        </button>
+      </div>
+    </div>
+
+    <!-- STATUS SIDE -->
+    <div class="status-panel">
+
+      <!-- LIVE TRACKING -->
+      <div class="status-card">
+        <div class="card-title" style="margin-bottom:16px;">Live Tracking Armada</div>
+    <div class="map-wrap" id="mapwrap">
+<svg id="mapsvg" viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+    <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.25)"/>
+  </filter>
+</defs>
+
+<!-- Base map bg -->
+<rect width="680" height="420" fill="#e8ead6"/>
+
+<!-- City blocks / parcels -->
+<rect x="0" y="0" width="185" height="165" fill="#dfe0cb"/>
+<rect x="215" y="0" width="220" height="165" fill="#dfe0cb"/>
+<rect x="465" y="0" width="215" height="165" fill="#dfe0cb"/>
+<rect x="0" y="195" width="185" height="185" fill="#dfe0cb"/>
+<rect x="215" y="195" width="220" height="95" fill="#dfe0cb"/>
+<rect x="215" y="320" width="220" height="100" fill="#dfe0cb"/>
+<rect x="465" y="195" width="215" height="225" fill="#dfe0cb"/>
+
+<!-- Green areas / parks -->
+<rect x="30" y="30" width="120" height="80" rx="6" fill="#c7e0a8"/>
+<rect x="510" y="210" width="120" height="90" rx="6" fill="#c7e0a8"/>
+<rect x="240" y="220" width="80" height="60" rx="6" fill="#c7e0a8"/>
+
+<!-- Water / river at bottom -->
+<path d="M0 390 Q100 375 200 385 Q300 395 400 382 Q500 370 680 380 L680 420 L0 420Z" fill="#aecfd9" opacity="0.7"/>
+
+<!-- Main roads -->
+<!-- Horizontal: JL. Slamet Riyadi (main) -->
+<rect x="0" y="172" width="680" height="26" fill="#fff"/>
+<rect x="0" y="174" width="680" height="22" fill="#f5f5f0"/>
+<!-- Road stripe -->
+<line x1="0" y1="185" x2="680" y2="185" stroke="#fff" stroke-width="1.5" stroke-dasharray="18 10"/>
+
+<!-- Vertical: JL. Jend. Sudirman (main) -->
+<rect x="188" y="0" width="26" height="420" fill="#fff"/>
+<rect x="190" y="0" width="22" height="420" fill="#f5f5f0"/>
+<line x1="201" y1="0" x2="201" y2="420" stroke="#fff" stroke-width="1.5" stroke-dasharray="18 10"/>
+
+<!-- Secondary roads -->
+<rect x="0" y="82" width="680" height="14" fill="#f0f0e8"/>
+<rect x="0" y="295" width="680" height="14" fill="#f0f0e8"/>
+<rect x="82" y="0" width="14" height="420" fill="#f0f0e8"/>
+<rect x="352" y="0" width="14" height="420" fill="#f0f0e8"/>
+<rect x="540" y="0" width="14" height="420" fill="#f0f0e8"/>
+
+<!-- Road labels -->
+<text font-family="sans-serif" font-size="9" fill="#8a8a7a" font-weight="600" x="270" y="180" text-anchor="middle" transform="rotate(-0)">JL. SLAMET RIYADI</text>
+<text font-family="sans-serif" font-size="9" fill="#8a8a7a" font-weight="600" x="196" y="90" text-anchor="middle" transform="rotate(90,196,90)">JL. JEND. SUDIRMAN</text>
+
+<!-- Dotted route line from armada A to user -->
+<path d="M145 185 L201 185" stroke="#1a73e8" stroke-width="3" stroke-dasharray="6 4" fill="none" stroke-linecap="round"/>
+
+<!-- Route from user back to destination (simulated route) -->
+<path d="M215 185 Q280 185 320 160 Q360 140 400 185 L460 185" stroke="#1a73e8" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.5" stroke-dasharray="0"/>
+
+<!-- LANDMARKS as gmaps-style cards -->
+<!-- Pasar Gede -->
+<g id="poi-pasar" class="poi" onclick="showTooltip(event,'Pasar Gede','Pasar tradisional — 0.4 km','pasar')">
+  <rect x="50" y="22" width="108" height="48" rx="6" fill="white" filter="url(#shadow)"/>
+  <rect x="50" y="22" width="8" height="48" rx="3" fill="#f4a318"/>
+  <text font-family="sans-serif" font-size="10" font-weight="700" fill="#202124" x="64" y="39">PASAR GEDE</text>
+  <text font-family="sans-serif" font-size="8.5" fill="#5f6368" x="64" y="52">Surakarta</text>
+  <text font-family="sans-serif" font-size="8" fill="#f4a318" x="64" y="63">★★★★☆ 4.5</text>
+</g>
+
+<!-- Keraton -->
+<g id="poi-keraton" onclick="showTooltip(event,'Keraton Surakarta','Wisata budaya — 0.8 km','keraton')">
+  <rect x="354" y="198" width="100" height="48" rx="6" fill="white" filter="url(#shadow)"/>
+  <rect x="354" y="198" width="8" height="48" rx="3" fill="#e91e63"/>
+  <text font-family="sans-serif" font-size="10" font-weight="700" fill="#202124" x="368" y="215">KERATON</text>
+  <text font-family="sans-serif" font-size="8.5" fill="#5f6368" x="368" y="228">Surakarta</text>
+  <text font-family="sans-serif" font-size="8" fill="#e91e63" x="368" y="239">★★★★★ 4.8</text>
+</g>
+
+<!-- Kampus UNS -->
+<g onclick="showTooltip(event,'Universitas Sebelas Maret','Kampus — 0.6 km','kampus')">
+  <rect x="38" y="208" width="110" height="38" rx="6" fill="white" filter="url(#shadow)"/>
+  <rect x="38" y="208" width="8" height="38" rx="3" fill="#0f9d58"/>
+  <text font-family="sans-serif" font-size="10" font-weight="700" fill="#202124" x="52" y="225">KAMPUS UNS</text>
+  <text font-family="sans-serif" font-size="8.5" fill="#5f6368" x="52" y="237">Universitas</text>
+</g>
+
+<!-- Stasiun Solo Balapan -->
+<g onclick="showTooltip(event,'Stasiun Solo Balapan','Stasiun KA — 1.2 km','stasiun')">
+  <rect x="476" y="208" width="120" height="48" rx="6" fill="white" filter="url(#shadow)"/>
+  <rect x="476" y="208" width="8" height="48" rx="3" fill="#1a73e8"/>
+  <text font-family="sans-serif" font-size="10" font-weight="700" fill="#202124" x="490" y="225">STASIUN SOLO</text>
+  <text font-family="sans-serif" font-size="8.5" fill="#5f6368" x="490" y="237">Balapan</text>
+  <text font-family="sans-serif" font-size="8" fill="#1a73e8" x="490" y="248">Commuter • KRL</text>
+</g>
+
+<!-- RS PKU -->
+<g onclick="showTooltip(event,'RS PKU Muhammadiyah','Rumah Sakit — 1.5 km','rs')">
+  <rect x="0" y="25" width="72" height="38" rx="6" fill="white" filter="url(#shadow)"/>
+  <rect x="0" y="25" width="8" height="38" rx="3" fill="#db4437"/>
+  <text font-family="sans-serif" font-size="9.5" font-weight="700" fill="#202124" x="13" y="42">RS PKU</text>
+  <text font-family="sans-serif" font-size="8" fill="#5f6368" x="13" y="54">Rumah Sakit</text>
+</g>
+
+<!-- Hartono Mall -->
+<g onclick="showTooltip(event,'Hartono Mall','Pusat perbelanjaan — 1.8 km','mall')">
+  <rect x="492" y="22" width="100" height="38" rx="6" fill="white" filter="url(#shadow)"/>
+  <rect x="492" y="22" width="8" height="38" rx="3" fill="#9c27b0"/>
+  <text font-family="sans-serif" font-size="9.5" font-weight="700" fill="#202124" x="506" y="39">HARTONO</text>
+  <text font-family="sans-serif" font-size="8" fill="#5f6368" x="506" y="51">Mall</text>
+</g>
+
+<!-- Manahan Stadion -->
+<g onclick="showTooltip(event,'Stadion Manahan','Stadion — 2.1 km','stadion')">
+  <rect x="26" y="320" width="110" height="38" rx="6" fill="white" filter="url(#shadow)"/>
+  <rect x="26" y="320" width="8" height="38" rx="3" fill="#0f9d58"/>
+  <text font-family="sans-serif" font-size="9.5" font-weight="700" fill="#202124" x="40" y="337">MANAHAN</text>
+  <text font-family="sans-serif" font-size="8" fill="#5f6368" x="40" y="349">Stadion</text>
+</g>
+
+<!-- Bandara -->
+<g onclick="showTooltip(event,'Bandara Adi Soemarmo','Bandara — 14 km','bandara')">
+  <rect x="490" y="330" width="130" height="48" rx="6" fill="white" filter="url(#shadow)"/>
+  <rect x="490" y="330" width="8" height="48" rx="3" fill="#1a73e8"/>
+  <text font-family="sans-serif" font-size="9.5" font-weight="700" fill="#202124" x="504" y="347">BANDARA</text>
+  <text font-family="sans-serif" font-size="8" fill="#5f6368" x="504" y="358">Adi Soemarmo</text>
+  <text font-family="sans-serif" font-size="8" fill="#1a73e8" x="504" y="369">✈ International</text>
+</g>
+
+<!-- Armada dots B-F -->
+<g onclick="showTooltip(event,'Armada B','Siaga — 0.9 km','driver')">
+  <circle cx="360" cy="80" r="12" fill="#1a73e8" filter="url(#shadow)"/>
+  <text font-family="sans-serif" font-size="9" font-weight="700" fill="white" text-anchor="middle" dominant-baseline="central" x="360" y="80">B</text>
+</g>
+<g onclick="showTooltip(event,'Armada C','Siaga — 1.5 km','driver')">
+  <circle cx="590" cy="185" r="12" fill="#1a73e8" filter="url(#shadow)"/>
+  <text font-family="sans-serif" font-size="9" font-weight="700" fill="white" text-anchor="middle" dominant-baseline="central" x="590" y="185">C</text>
+</g>
+<g onclick="showTooltip(event,'Armada D','Siaga — 1.8 km','driver')">
+  <circle cx="300" cy="330" r="12" fill="#1a73e8" filter="url(#shadow)"/>
+  <text font-family="sans-serif" font-size="9" font-weight="700" fill="white" text-anchor="middle" dominant-baseline="central" x="300" y="330">D</text>
+</g>
+<g onclick="showTooltip(event,'Armada E','Siaga — 2.3 km','driver')">
+  <circle cx="140" cy="330" r="11" fill="#5f9cf5"/>
+  <text font-family="sans-serif" font-size="9" font-weight="700" fill="white" text-anchor="middle" dominant-baseline="central" x="140" y="330">E</text>
+</g>
+<g onclick="showTooltip(event,'Armada F','Siaga — 2.8 km','driver')">
+  <circle cx="590" cy="280" r="11" fill="#5f9cf5"/>
+  <text font-family="sans-serif" font-size="9" font-weight="700" fill="white" text-anchor="middle" dominant-baseline="central" x="590" y="280">F</text>
+</g>
+
+<!-- ARMADA A - active, animated -->
+<g id="armadaA" onclick="showTooltip(event,'Armada A','Menuju lokasi • ~28 menit','driver')">
+  <!-- Pulse ring -->
+  <circle cx="145" cy="185" r="18" fill="#1a73e8" opacity="0.15" id="pulse1"/>
+  <circle cx="145" cy="185" r="13" fill="#1a73e8" opacity="0.2" id="pulse2"/>
+  <circle cx="145" cy="185" r="9" fill="#1a73e8"/>
+  <text font-family="sans-serif" font-size="9" font-weight="700" fill="white" text-anchor="middle" dominant-baseline="central" x="145" y="185">A</text>
+</g>
+
+<!-- User pin (gmaps style) -->
+<g id="user-pin">
+  <!-- Shadow -->
+  <ellipse cx="218" cy="197" rx="7" ry="3" fill="rgba(0,0,0,0.2)"/>
+  <!-- Pin body -->
+  <path d="M218 155 C204 155 193 166 193 180 C193 196 218 215 218 215 C218 215 243 196 243 180 C243 166 232 155 218 155Z" fill="#1a73e8"/>
+  <circle cx="218" cy="180" r="7" fill="white"/>
+  <!-- Label -->
+  <rect x="196" y="141" width="44" height="16" rx="3" fill="#202124"/>
+  <text font-family="sans-serif" font-size="9" font-weight="700" fill="white" text-anchor="middle" x="218" y="152">KAMU</text>
+  <!-- connector -->
+  <line x1="218" y1="157" x2="218" y2="152" stroke="#202124" stroke-width="1"/>
+</g>
+    <path d="M110,159 L176,159" stroke="#f5c518" stroke-width="2" stroke-dasharray="5 4" opacity="0.7"/>
+    <path d="M110,159 L110,140 Q110,120 140,115 L160,113" stroke="#f5c518" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.4" fill="none"/>
+
+    <text x="8" y="296" fill="#5fd08a" font-size="8" font-weight="600" opacity="0.8">● Armada aktif menuju kamu</text>
+    <text x="8" y="308" fill="#3a7a52" font-size="7" opacity="0.7">A=menuju | B-F=siaga di Solo</text>
+  </svg>
+
+    <div class="map-overlay">
+    <div class="map-badge">📍 Surakarta, Jawa Tengah</div>
+    <div class="map-eta">~28 menit</div>
+  </div>
+</div>
+
+<div class="status-wrap">
+  <div class="status-row">
+    <span class="status-label"><span class="pulse"></span>Status Armada</span>
+    <span class="badge-green">Aktif</span>
+  </div>
+  <div class="status-row">
+    <span class="status-label"><i class="ti ti-moped" aria-hidden="true" style="font-size:16px"></i>Armada Tersedia</span>
+    <span class="status-val">6 unit aktif di Solo</span>
+  </div>
+  <div class="status-row">
+    <span class="status-label"><i class="ti ti-clock" aria-hidden="true" style="font-size:16px"></i>Estimasi Tiba</span>
+    <span class="badge-amber">25–35 menit</span>
+  </div>
+  <div class="status-row">
+    <span class="status-label"><i class="ti ti-map-pin" aria-hidden="true" style="font-size:16px"></i>Area Layanan</span>
+    <span class="status-val">Solo Raya</span>
+  </div>
+  <div class="status-row">
+    <span class="status-label"><i class="ti ti-navigation" aria-hidden="true" style="font-size:16px"></i>Driver Terdekat</span>
+    <span class="status-val">Armada A — Jl. Slamet Riyadi</span>
+  </div>
+</div>
+
+      <!-- ACTIVE ORDER -->
+      <div class="status-card" id="active-order" style="display:none;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+          <div style="width:10px;height:10px;background:#34b86a;border-radius:50%;animation:pulse-ring 2s ease infinite;"></div>
+          <div class="card-title" style="font-size:18px;">Penjemputan Aktif</div>
+        </div>
+        <div class="status-row"><span class="status-label">Nomor Order</span><span class="status-value" id="order-num">MGO-2025-0001</span></div>
+        <div class="status-row"><span class="status-label">Armada</span><span class="status-value">#A-12 — Supra e-Motor</span></div>
+        <div class="status-row"><span class="status-label">Status</span><span class="status-badge badge-amber">Dalam perjalanan</span></div>
+        <div class="status-row"><span class="status-label">Estimasi Tiba</span><span class="status-value" id="eta-text">32 menit</span></div>
+        <button style="width:100%;margin-top:16px;padding:12px;border:2px solid #fbbf24;background:#fef3c7;color:#92400e;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;" onclick="cancelOrder()">
+          Batalkan Penjemputan
+        </button>
+      </div>
+
+      <!-- POIN INFO -->
+      <div class="status-card" style="background:linear-gradient(135deg,var(--g900),var(--g700));border:none;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+          <div style="width:48px;height:48px;background:rgba(52,184,106,.2);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;">🌿</div>
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:white;">Dapatkan Poin Rewards</div>
+            <div style="font-size:13px;color:rgba(255,255,255,.6);">Setiap penyetoran dapatkan Go Points</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div style="background:rgba(255,255,255,.08);border-radius:14px;padding:14px;text-align:center;">
+            <div style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--g300);">+1-3</div>
+            <div style="font-size:11px;color:rgba(255,255,255,.6);">poin per jenis limbah</div>
+          </div>
+          <div style="background:rgba(255,255,255,.08);border-radius:14px;padding:14px;text-align:center;">
+            <div style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--g300);">+4-6</div>
+            <div style="font-size:11px;color:rgba(255,255,255,.6);">poin per 2 jenis limbah</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIWAYAT -->
+      <div class="status-card">
+        <div class="card-title" style="margin-bottom:16px;">Riwayat Penjemputan</div>
+        <div class="history-list">
+          <div class="history-item">
+            <div class="history-icon"><span class="msym">check_circle</span></div>
+            <div class="history-info"><div class="history-title">Penjemputan Selesai</div><div class="history-meta">Sel, 10 Jun 2025 • Armada #A-07</div></div>
+            <div style="text-align:right;"><div class="history-weight">2 jenis</div><div class="history-pts">+4 poin</div></div>
+          </div>
+          <div class="history-item">
+            <div class="history-icon"><span class="msym">check_circle</span></div>
+            <div class="history-info"><div class="history-title">Penjemputan Selesai</div><div class="history-meta">Sab, 7 Jun 2025 • Armada #A-03</div></div>
+            <div style="text-align:right;"><div class="history-weight">1 jenis</div><div class="history-pts">+1 poin</div></div>
+          </div>
+          <div class="history-item">
+            <div class="history-icon"><span class="msym">check_circle</span></div>
+            <div class="history-info"><div class="history-title">Penjemputan Selesai</div><div class="history-meta">Rab, 4 Jun 2025 • Armada #A-11</div></div>
+            <div style="text-align:right;"><div class="history-weight">3 jenis</div><div class="history-pts">+6 poin</div></div>
+          </div>
+        </div>
+        <button style="width:100%;margin-top:16px;padding:12px;background:var(--bg);border:1px solid var(--bdr);border-radius:12px;font-weight:700;font-size:14px;color:var(--txt2);cursor:pointer;font-family:inherit;">Lihat Semua Riwayat →</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="Home.html" class="brand" style="text-decoration:none;">
+          <div class="brand-logo"><img src="foto/MAG-Go.PNG" alt="MAG-GO logo"/></div>
+          <span class="brand-name" style="color:white;"><Mag-Go></Mag-Go></span>
+        </a>
+        <p>Platform digital pengelolaan food waste berbasis ekonomi sirkular Indonesia.</p>
+      </div>
+      <div><div class="footer-heading">Platform</div><ul class="footer-links"><li><a href="Penjemputan.html">Go <Pick-Up></Pick-Up></a></li><li><a href="marketplace.html">Go <Marketplace></Marketplace></a></li><li><a href="Game.html">Maggotku</a></li><li><a href="leaderboard.html">Go Leaderboard</a></li><li><a href="Berlangganan.html">Go langganan</a></li></ul></div>
+      <div><div class="footer-heading">Mitra</div><ul class="footer-links"><li><a href="#">Pemasok Limbah</a></li><li><a href="#">Peternak Maggot</a></li><li><a href="#">Petani & Peternak</a></li></ul></div>
+      <div><div class="footer-heading">Perusahaan</div><ul class="footer-links"><li><a href="#">Tentang Kami</a></li><li><a href="#">Blog</a></li><li><a href="#">Hubungi Kami</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2026 Mag-Go. Dibuat dengan 🌿 untuk Indonesia.</div><div class="footer-copy">Applikasi Ekonomi Sirkular Food Waste Indonesia</div></div>
+  </div>
+</footer>
+
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <a href="Home.html" class="bottom-nav-item"><span class="msym" style="font-variation-settings:'FILL' 0">home</span><span>Home</span></a>
+    <a href="Penjemputan.html" class="bottom-nav-item active"><span class="msym">local_shipping</span><span>Go Pick-Up</span></a>
+    <a href="marketplace.html" class="bottom-nav-item"><span class="msym" style="font-variation-settings:'FILL' 0">storefront</span><span>Go Marketplace</span></a>
+    <a href="Game.html" class="bottom-nav-item"><span class="msym" style="font-variation-settings:'FILL' 0">sports_esports</span><span>Go Game</span></a>
+    <a href="Berlangganan.html" class="bottom-nav-item"><span class="msym" style="font-variation-settings:'FILL' 0">workspace_premium</span><span>Go Premium</span></a>
+  </div>
+</nav>
+
+<script>
+// ── User Type ──
+let currentUserType = 'rt';
+function switchUserType(type) {
+  currentUserType = type;
+  document.querySelectorAll('.user-type-option').forEach(o => o.classList.remove('active'));
+  document.getElementById('type-' + type).classList.add('active');
+  const isRT = type === 'rt';
+  document.getElementById('banner-rt').style.display = isRT ? 'flex' : 'none';
+  document.getElementById('banner-biz').style.display = isRT ? 'none' : 'flex';
+  document.getElementById('field-nama-rt').style.display = isRT ? 'block' : 'none';
+  document.getElementById('field-nama-biz').style.display = isRT ? 'none' : 'block';
+  document.getElementById('rt-info-section').style.display = isRT ? 'block' : 'none';
+  document.getElementById('biz-pic-section').style.display = isRT ? 'none' : 'block';
+  document.getElementById('photo-rt-guide').style.display = isRT ? 'block' : 'none';
+  document.getElementById('photo-biz-guide').style.display = isRT ? 'none' : 'block';
+  document.getElementById('rt-collection-status').style.display = isRT ? 'block' : 'none';
+  document.getElementById('biz-volume-verify').style.display = isRT ? 'none' : 'block';
+}
+
+// ── Photo Upload ──
+let photoCount = 0;
+function triggerUpload(n) {
+  document.getElementById('file-' + n).click();
+}
+function previewPhoto(input, n) {
+  if (!input.files || !input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('pus-img-' + n).src = e.target.result;
+    document.getElementById('pus-empty-' + n).style.display = 'none';
+    document.getElementById('pus-preview-' + n).style.display = 'block';
+    document.getElementById('slot-' + n).classList.add('has-photo');
+    updatePhotoCount(1);
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+function removePhoto(e, n) {
+  e.stopPropagation();
+  document.getElementById('pus-img-' + n).src = '';
+  document.getElementById('pus-empty-' + n).style.display = 'flex';
+  document.getElementById('pus-preview-' + n).style.display = 'none';
+  document.getElementById('slot-' + n).classList.remove('has-photo');
+  document.getElementById('file-' + n).value = '';
+  updatePhotoCount(-1);
+}
+function updatePhotoCount(delta) {
+  photoCount = Math.max(0, photoCount + delta);
+  const statusEl = document.getElementById('photo-status');
+  const textEl = document.getElementById('photo-count-text');
+  if (photoCount === 0) {
+    statusEl.className = 'photo-status';
+    textEl.textContent = 'Belum ada foto — minimal 1 foto wajib diupload';
+  } else {
+    statusEl.className = 'photo-status ok';
+    textEl.textContent = photoCount + ' foto berhasil diupload ✓';
+  }
+}
+
+// ── Radio selections ──
+function selectRTStatus(el, val) {
+  document.querySelectorAll('[name="rt-status"]').forEach(r => {
+    r.closest('.radio-card').classList.remove('selected');
+  });
+  el.classList.add('selected');
+}
+function selectBizStatus(el, val) {
+  document.querySelectorAll('[name="biz-status"]').forEach(r => {
+    r.closest('.radio-card').classList.remove('selected');
+  });
+  el.classList.add('selected');
+}
+
+function selectWaste(el) {
+  document.querySelectorAll('.waste-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function switchTab(tab, btn) {
+  document.querySelectorAll('.sched-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-now').style.display = tab === 'now' ? 'block' : 'none';
+  document.getElementById('tab-schedule').style.display = tab === 'schedule' ? 'block' : 'none';
+}
+function updateEstimate(val) {
+  const kg = parseFloat(val) || 0;
+  const panel = document.getElementById('price-estimate');
+  if (kg > 0) {
+    panel.style.display = 'block';
+    const service = 15000;
+    const perKg = kg * 1500;
+    const total = service + perKg;
+    document.getElementById('est-service').textContent = 'Rp ' + service.toLocaleString('id');
+    document.getElementById('est-pkg').textContent = 'Rp ' + perKg.toLocaleString('id') + ' (' + kg + ' kg × Rp 1.500)';
+    document.getElementById('est-total').textContent = 'Rp ' + total.toLocaleString('id');
+  } else panel.style.display = 'none';
+}
+let orderCount = 0;
+function submitPickup() {
+  if (photoCount === 0) {
+    alert('⚠️ Harap upload minimal 1 foto konfirmasi sampah sebelum melanjutkan.');
+    document.getElementById('photo-status').scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  orderCount++;
+  const orderNum = 'MGO-2025-' + String(orderCount).padStart(4,'0');
+  document.getElementById('order-num').textContent = orderNum;
+  document.getElementById('active-order').style.display = 'block';
+  let eta = 32;
+  const etaEl = document.getElementById('eta-text');
+  const timer = setInterval(() => {
+    eta--;
+    etaEl.textContent = eta + ' menit';
+    if (eta <= 0) { clearInterval(timer); etaEl.textContent = 'Hampir tiba!'; }
+  }, 3000);
+  // scroll to active order
+  document.getElementById('active-order').scrollIntoView({behavior:'smooth', block:'center'});
+  alert('✅ Penjemputan dikonfirmasi!\nArmada #A-12 sedang menuju lokasi Anda.\nEstimasi tiba: 32 menit.');
+}
+function cancelOrder() {
+  if (confirm('Batalkan penjemputan ini?')) {
+    document.getElementById('active-order').style.display = 'none';
+  }
+}
+</script>
+</body>
+</html>

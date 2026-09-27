@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MAG-GO — Leaderboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<style>
+
+:root{--g950:#0a2e1e;--g900:#0f3d28;--g700:#1a6b40;--g600:#1e844d;--g400:#34b86a;--g300:#5fd08a;--g200:#9ae6b0;--g100:#c6f2d4;--g50:#eefaf2;--amber:#f59e0b;--bg:#f6faf7;--surf:#fff;--surf2:#f0f7f3;--txt:#0a2e1e;--txt2:#3a5f4a;--muted:#6b8f7a;--bdr:#d4e8db;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;}
+.msym{font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;display:inline-block;line-height:1;white-space:nowrap;vertical-align:middle;-webkit-font-smoothing:antialiased;}
+.navbar{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr);padding:12px 0;box-shadow:0 2px 12px rgba(10,46,30,.06);}
+.navbar-inner{max-width:1280px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.brand-logo{width:44px;height:44px;border-radius:14px;overflow:hidden;}
+.brand-logo img{width:100%;height:100%;object-fit:cover;}
+.brand-name{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--g900);letter-spacing:-.5px;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:50px;font-size:14px;font-weight:600;color:var(--txt2);text-decoration:none;transition:all .2s;}
+.nav-link:hover{background:var(--g50);color:var(--g700);}
+.nav-link.active{background:var(--g900);color:white;}
+.nav-link .msym{font-size:18px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
+.nav-link.active .msym{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;}
+.nav-actions{display:flex;align-items:center;gap:10px;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;border:none;transition:all .2s;text-decoration:none;font-family:inherit;}
+.btn-primary{background:var(--g900);color:white;}.btn-primary:hover{background:var(--g700);}
+.btn-outline{background:transparent;color:var(--g900);border:2px solid var(--bdr);}.btn-outline:hover{border-color:var(--g400);background:var(--g50);}
+.page-hero{background:linear-gradient(135deg,var(--g950),var(--g700));padding:56px 32px 64px;position:relative;overflow:hidden;}
+.page-hero-inner{max-width:1280px;margin:0 auto;position:relative;z-index:2;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(52,184,106,.2);border:1px solid rgba(52,184,106,.3);color:var(--g200);padding:8px 16px;border-radius:50px;font-size:13px;font-weight:600;margin-bottom:16px;}
+.page-hero h1{font-family:'Syne',sans-serif;font-size:44px;font-weight:800;color:white;line-height:1.1;letter-spacing:-1px;margin-bottom:12px;}
+.page-hero h1 span{color:var(--g300);}
+.page-hero p{font-size:16px;color:rgba(255,255,255,.7);max-width:560px;}
+.main{max-width:1280px;margin:0 auto;padding:48px 32px;}
+.footer{background:var(--g950);padding:56px 32px 32px;margin-top:80px;}
+.footer-inner{max-width:1280px;margin:0 auto;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px;}
+.footer-brand p{color:rgba(255,255,255,.5);font-size:14px;margin-top:12px;line-height:1.7;max-width:260px;}
+.footer-heading{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:white;margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.footer-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:14px;transition:color .2s;}
+.footer-links a:hover{color:var(--g300);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;display:flex;justify-content:space-between;}
+.footer-copy{font-size:13px;color:rgba(255,255,255,.4);}
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-top:1px solid var(--bdr);padding:8px 0 calc(8px + env(safe-area-inset-bottom));z-index:100;}
+.bottom-nav-inner{display:flex;justify-content:space-around;}
+.bottom-nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 12px;border-radius:12px;text-decoration:none;}
+.bottom-nav-item span:first-child{font-size:24px;color:var(--muted);font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
+.bottom-nav-item span:last-child{font-size:10px;font-weight:600;color:var(--muted);}
+.bottom-nav-item.active span{color:var(--g700) !important;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24 !important;}
+@media(max-width:768px){
+  .nav-links{display:none;}.bottom-nav{display:block;}
+  .page-hero{padding:40px 20px;}.page-hero h1{font-size:32px;}
+  .main{padding:32px 20px;}
+  .footer-top{grid-template-columns:1fr 1fr;gap:28px;}.footer-bottom{flex-direction:column;gap:10px;text-align:center;}
+  body{padding-bottom:80px;}
+}
+
+.podium-section{background:linear-gradient(135deg,var(--g950) 0%,var(--g700) 100%);padding:64px 32px;text-align:center;position:relative;overflow:hidden;}
+.podium-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(52,184,106,.2) 0%,transparent 70%);pointer-events:none;}
+.podium-section h1{font-family:'Syne',sans-serif;font-size:48px;font-weight:800;color:white;letter-spacing:-1px;margin-bottom:8px;}
+.podium-section h1 span{color:var(--g300);}
+.podium-section p{color:rgba(255,255,255,.65);font-size:16px;margin-bottom:48px;}
+.podium{display:flex;justify-content:center;align-items:flex-end;gap:16px;position:relative;z-index:2;max-width:600px;margin:0 auto;}
+.podium-item{display:flex;flex-direction:column;align-items:center;gap:0;}
+.podium-avatar{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;border:3px solid rgba(255,255,255,.3);margin-bottom:10px;position:relative;}
+.podium-avatar-1{width:88px;height:88px;border:3px solid #f59e0b;box-shadow:0 0 0 4px rgba(245,158,11,.25);}
+.crown{position:absolute;top:-20px;font-size:22px;}
+.podium-name{font-size:14px;font-weight:700;color:white;margin-bottom:2px;}
+.podium-xp{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:8px;}
+.podium-block{border-radius:16px 16px 0 0;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:white;width:120px;}
+.podium-block-1{background:rgba(245,158,11,.3);border:2px solid rgba(245,158,11,.5);height:120px;width:140px;}
+.podium-block-2{background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.2);height:90px;}
+.podium-block-3{background:rgba(176,124,76,.2);border:2px solid rgba(176,124,76,.3);height:70px;}
+.leaderboard-grid{display:grid;grid-template-columns:1fr 320px;gap:32px;align-items:start;margin-top:40px;}
+.card{background:var(--surf);border:1px solid var(--bdr);border-radius:28px;overflow:hidden;box-shadow:0 4px 16px rgba(10,46,30,.06);}
+.card-header{padding:24px 28px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;}
+.card-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--g950);}
+.period-tabs{display:flex;background:var(--surf2);border-radius:50px;padding:3px;gap:2px;}
+.period-tab{padding:6px 14px;border-radius:50px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;border:none;background:none;font-family:inherit;color:var(--muted);}
+.period-tab.active{background:white;color:var(--g700);box-shadow:0 2px 8px rgba(10,46,30,.08);}
+.lb-table{width:100%;border-collapse:collapse;}
+.lb-row{display:flex;align-items:center;gap:16px;padding:14px 28px;transition:all .2s;border-bottom:1px solid var(--bdr);}
+.lb-row:last-child{border-bottom:none;}
+.lb-row:hover{background:var(--g50);}
+.lb-row.mine{background:linear-gradient(90deg,var(--g50),rgba(198,242,212,.3));border-left:3px solid var(--g400);}
+.lb-rank{width:32px;text-align:center;font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--muted);}
+.lb-rank.gold{color:#f59e0b;}
+.lb-rank.silver{color:#94a3b8;}
+.lb-rank.bronze{color:#cd7c40;}
+.lb-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--g100),var(--g300));display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;border:2px solid var(--bdr);}
+.lb-info{flex:1;}
+.lb-name{font-size:15px;font-weight:700;color:var(--txt);}
+.lb-role{font-size:12px;color:var(--muted);}
+.lb-xp{text-align:right;}
+.lb-xp-num{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--g700);}
+.lb-xp-label{font-size:11px;color:var(--muted);}
+.lb-trend{font-size:13px;margin-left:6px;}
+.side-card{margin-bottom:20px;}
+.my-rank-card{background:linear-gradient(135deg,var(--g900),var(--g700));border-radius:24px;padding:28px;color:white;margin-bottom:20px;}
+.my-rank-num{font-family:'Syne',sans-serif;font-size:48px;font-weight:800;color:var(--g300);line-height:1;}
+.progress-bar{height:8px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden;margin-top:12px;}
+.progress-fill{height:100%;background:var(--g400);border-radius:4px;transition:width .6s ease;}
+.achievement-list{display:flex;flex-direction:column;gap:10px;padding:16px;}
+.achievement{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:14px;border:1px solid var(--bdr);}
+.ach-icon{font-size:24px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;}
+.ach-info{flex:1;}
+.ach-name{font-size:14px;font-weight:700;color:var(--txt);}
+.ach-desc{font-size:12px;color:var(--muted);}
+.ach-pts{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--g700);}
+</style>
+</head>
+<body>
+<header class="navbar"><div class="navbar-inner">
+    <a href="Home.html" class="brand"><div class="brand-logo"><img src="foto/MAG-Go.PNG" alt="MAG-GO"/></div><span class="brand-name">Mag-Go</span></a>
+    <nav class="nav-links"><a href="Home.html" class="nav-link "><span class="msym">home</span>Home</a><a href="Penjemputan.html" class="nav-link "><span class="msym">local_shipping</span>Go Pick-Up</a><a href="marketplace.html" class="nav-link "><span class="msym">storefront</span>Go Marketplace</a><a href="Game.html" class="nav-link "><span class="msym">sports_esports</span>Maggotku</a><a href="leaderboard.html" class="nav-link active"><span class="msym">leaderboard</span>Go Leaderboard</a><a href="Berlangganan.html" class="nav-link "><span class="msym">workspace_premium</span>Langganan</a></nav>
+  </div></header>
+
+<section class="podium-section">
+  <div style="position:relative;z-index:2;">
+    <div class="hero-badge" style="display:inline-flex;margin-bottom:16px;"><span class="msym" style="font-size:16px">leaderboard</span>Kompetisi Daur Ulang Terbaik</div>
+    <h1>Leaderboard <span>Mag-Go</span></h1>
+    <p>Siapa yang paling banyak berkontribusi menyelamatkan lingkungan bulan ini?</p>
+    <div class="podium">
+      <div class="podium-item">
+        <div class="podium-avatar" style="background:linear-gradient(135deg,#94a3b8,#64748b);">🌿</div>
+        <div class="podium-name">Aruliza</div>
+        <div class="podium-xp">12.400 XP</div>
+        <div class="podium-block podium-block-2">🥈</div>
+      </div>
+      <div class="podium-item">
+        <div class="podium-avatar podium-avatar-1" style="background:linear-gradient(135deg,#f59e0b,#d97706);">
+          <div class="crown">👑</div>♻️
+        </div>
+        <div class="podium-name">April</div>
+        <div class="podium-xp">18.900 XP</div>
+        <div class="podium-block podium-block-1">🥇</div>
+      </div>
+      <div class="podium-item">
+        <div class="podium-avatar" style="background:linear-gradient(135deg,#cd7c40,#a85f2a);">🌾</div>
+        <div class="podium-name">illafi</div>
+        <div class="podium-xp">10.100 XP</div>
+        <div class="podium-block podium-block-3">🥉</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="main">
+  <div class="leaderboard-grid">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🏆 Ranking Global</div>
+        <div class="period-tabs">
+          <button class="period-tab active">Bulan Ini</button>
+          <button class="period-tab">Mingguan</button>
+          <button class="period-tab">Sepanjang Masa</button>
+        </div>
+      </div>
+      <div id="lb-list"></div>
+    </div>
+
+    <div>
+      <div class="my-rank-card">
+        <div style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:4px;">Peringkat kamu saat ini</div>
+        <div class="my-rank-num">#24</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.8);margin-top:4px;">dari 1.247 pengguna aktif</div>
+        <div style="margin-top:16px;font-size:13px;color:rgba(255,255,255,.7);">Progress ke #23</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:72%;"></div></div>
+        <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:6px;">Butuh 340 XP lagi untuk naik peringkat</div>
+      </div>
+
+      <div class="card side-card">
+        <div class="card-header" style="border-bottom:1px solid var(--bdr);">
+          <div class="card-title" style="font-size:17px;">🏅 Pencapaian Terbaru</div>
+        </div>
+        <div class="achievement-list">
+          <div class="achievement">
+            <div class="ach-icon">🌿</div>
+            <div class="ach-info"><div class="ach-name">Eco Warrior</div><div class="ach-desc">Setor 100 kg food waste pertama</div></div>
+            <div class="ach-pts">+500 XP</div>
+          </div>
+          <div class="achievement">
+            <div class="ach-icon">🔥</div>
+            <div class="ach-info"><div class="ach-name">Streak 7 Hari</div><div class="ach-desc">Login & aktivitas 7 hari berturut</div></div>
+            <div class="ach-pts">+200 XP</div>
+          </div>
+          <div class="achievement">
+            <div class="ach-icon">🛒</div>
+            <div class="ach-info"><div class="ach-name">Pembeli Pertama</div><div class="ach-desc">Transaksi pertama di marketplace</div></div>
+            <div class="ach-pts">+150 XP</div>
+          </div>
+          <div class="achievement" style="opacity:.5;">
+            <div class="ach-icon">🥇</div>
+            <div class="ach-info"><div class="ach-name">Top 10 Bulanan</div><div class="ach-desc">Masuk 10 besar leaderboard bulan ini</div></div>
+            <div class="ach-pts" style="color:var(--muted);">Kunci</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer"><div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand"><a href="Home.html" class="brand" style="text-decoration:none;"><div class="brand-logo"><img src="foto/MAG-Go.PNG"alt="MAG-GO"/></div><span class="brand-name" style="color:white;">Mag-Go</span></a><p>Platform digital pengelolaan food waste berbasis ekonomi sirkular Indonesia.</p></div>
+      <div><div class="footer-heading">Platform</div><ul class="footer-links"><li><a href="Penjemputan.html">Go Pick-Up</a></li><li><a href="marketplace.html">Go Marketplace</a></li><li><a href="Game.html">Maggotku</a></li><li><a href="leaderboard.html">Go Leaderboard</a></li><li><a href="Berlangganan.html">Go Subscription</a></li></ul></div>
+      <div><div class="footer-heading">Mitra</div><ul class="footer-links"><li><a href="#">Pemasok Limbah</a></li><li><a href="#">Peternak Maggot</a></li><li><a href="#">Petani & Peternak</a></li></ul></div>
+      <div><div class="footer-heading">Perusahaan</div><ul class="footer-links"><li><a href="#">Tentang Kami</a></li><li><a href="#">Blog</a></li><li><a href="#">Hubungi Kami</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2026 Mag-Go. Dibuat dengan 🌿 untuk Indonesia.</div><div class="footer-copy">Applikasi Ekonomi Sirkular Food Waste Indonesia</div></div>
+  </div></footer>
+<nav class="bottom-nav"><div class="bottom-nav-inner"><a href="Home.html" class="bottom-nav-item "><span class="msym">home</span><span>Home</span></a><a href="Penjemputan.html" class="bottom-nav-item "><span class="msym">local_shipping</span><span>Go Pick-Up</span></a><a href="marketplace.html" class="bottom-nav-item "><span class="msym">storefront</span><span>Go Marketplace</span></a><a href="Game.html" class="bottom-nav-item "><span class="msym">sports_esports</span><span>Maggotku</span></a><a href="Berlangganan.html" class="bottom-nav-item "><span class="msym">workspace_premium</span><span>Go Subscription</span></a></div></nav>
+
+<script>
+const players = [
+  {rank:1,emoji:'♻️',name:'Feri Kurniawan',role:'Peternak Maggot · Bandung',xp:18900,trend:'▲2'},
+  {rank:2,emoji:'🌿',name:'Varel',role:'Katering · Jakarta Selatan',xp:12400,trend:'▼1'},
+  {rank:3,emoji:'🌾',name:'Irfan',role:'Petani · Cianjur',xp:10100,trend:'▲3'},
+  {rank:4,emoji:'🌱',name:'Adib',role:'Peternak Maggot · Bogor',xp:9800,trend:'—'},
+  {rank:5,emoji:'🍃',name:'Firdaus',role:'Rumah Makan · Depok',xp:8750,trend:'▲1'},
+  {rank:6,emoji:'🐟',name:'Pramesti',role:'Peternak Ikan · Bekasi',xp:8200,trend:'▼2'},
+  {rank:7,emoji:'🦋',name:'Arkan',role:'Bakery · Bandung',xp:7900,trend:'▲4'},
+  {rank:8,emoji:'🌻',name:'Rakan',role:'Petani Sayur · Lembang',xp:7400,trend:'—'},
+  {rank:9,emoji:'🦜',name:'Yassir',role:'SPPG · Cimahi',xp:6900,trend:'▲2'},
+  {rank:10,emoji:'🌳',name:'Noval',role:'Restoran · Jakarta Utara',xp:6200,trend:'▼1'},
+  {rank:11,emoji:'🐛',name:'Cahyo',role:'Peternak Maggot · Sukabumi',xp:5800,trend:'—'},
+  {rank:12,emoji:'🌊',name:'Arya',role:'Pasar Tradisional · Garut',xp:5200,trend:'▲5'},
+];
+function renderLB() {
+  const el = document.getElementById('lb-list');
+  el.innerHTML = players.map((p,i) => {
+    const rankClass = p.rank===1?'gold':p.rank===2?'silver':p.rank===3?'bronze':'';
+    const rankDisplay = p.rank<=3 ? ['🥇','🥈','🥉'][p.rank-1] : p.rank;
+    return `<div class="lb-row ${i===23?'mine':''}">
+      <div class="lb-rank ${rankClass}">${rankDisplay}</div>
+      <div class="lb-avatar">${p.emoji}</div>
+      <div class="lb-info"><div class="lb-name">${p.name}</div><div class="lb-role">${p.role}</div></div>
+      <div class="lb-xp">
+        <div class="lb-xp-num">${(p.xp/1000).toFixed(1)}k</div>
+        <div class="lb-xp-label">XP<span class="lb-trend" style="color:${p.trend.includes('▲')?'#22c55e':p.trend==='—'?'#94a3b8':'#ef4444'}">${p.trend}</span></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+renderLB();
+document.querySelectorAll('.period-tab').forEach(btn => {
+  btn.onclick = function() {
+    document.querySelectorAll('.period-tab').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+  };
+});
+</script>
+</body>
+</html>
