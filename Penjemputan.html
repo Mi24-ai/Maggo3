@@ -42,11 +42,11 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .page-hero p{font-size:18px;color:rgba(255,255,255,.7);max-width:520px;line-height:1.7;}
 
 /* ─── MAIN CONTENT ─── */
-.main{max-width:1280px;margin:0 auto;padding:48px 32px;}
-.content-grid{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:start;}
+.main{max-width:1280px;margin:0 auto;padding:48px 32px;width:100%;box-sizing:border-box;}
+.content-grid{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:start;width:100%;}
 
 /* ─── FORM CARD ─── */
-.card{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rlg);padding:32px;box-shadow:var(--sdw);}
+.card{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--rlg);padding:32px;box-shadow:var(--sdw);width:100%;box-sizing:border-box;}
 .card-header{margin-bottom:28px;}
 .card-title{font-family:'Manrope',sans-serif;font-size:22px;font-weight:800;color:var(--g950);margin-bottom:6px;}
 .card-subtitle{font-size:14px;color:var(--muted);}
@@ -146,9 +146,10 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .bottom-nav-item span:first-child{font-size:24px;color:var(--muted);}
 .bottom-nav-item span:last-child{font-size:10px;font-weight:600;color:var(--muted);}
 .bottom-nav-item.active span{color:var(--g700) !important;}
-@media(max-width:768px){
+@media(max-width:900px){
   .nav-links{display:none;}
   .bottom-nav{display:block;}
+  .navbar-inner{padding:0 20px;}
   .page-hero{padding:48px 20px 64px;}
   .page-hero h1{font-size:34px;}
   .main{padding:32px 20px;}
@@ -207,7 +208,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .rc-icon{font-size:22px;}
 .rc-label{font-size:12px;font-weight:700;color:var(--txt2);}
 
-@media(max-width:768px){
+@media(max-width:900px){
   .photo-upload-grid{grid-template-columns:repeat(3,1fr);gap:8px;}
   .radio-grid{grid-template-columns:1fr 1fr 1fr;}
   .user-type-selector{grid-template-columns:1fr 1fr;}
